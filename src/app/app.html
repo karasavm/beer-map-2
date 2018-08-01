@@ -3,3 +3,7 @@
 <ion-nav #myNav *ngIf="brews" [root]="rootPage"></ion-nav>
 <!--<ion-spinner></ion-spinner>-->
 
+<div *ngIf="brews">
+  <img *ngFor="let brew of brews" style="display:none;" [src]="'assets/150X150cp/' + brew.icon" alt="">
+  <img *ngFor="let brew of brews" style="display:none;" [src]="'assets/compressed/' + brew.icon" alt="">
+</div>
