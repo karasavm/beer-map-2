@@ -1,14 +1,55 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-buttons right>
+      <button ion-button icon-only color="royal" *ngIf="!selectedArea" (click)="onClickInfo()">
+        <ion-icon name="information-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center *ngIf="!selectedArea">Ελληνικές Μικροζυθοποιίες</ion-title>
+    <ion-title text-center *ngIf="selectedArea">{{selectedArea.name}}</ion-title>
+
+
+    <ion-buttons left>
+      <button *ngIf="!selectedArea"ion-button icon-only color="royal" (click)="onClickSearch()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+
+
+  <div id="wrapper" style="position: relative; height: 100%">
+    <div #map id="map-canvas" style="height: 100%;width:100%;position: relative;">
+
+    </div>
+
+    <div id="over_map" style="
+      position: absolute; top: 0px; left: 0px; z-index: 99;
+      background-image: url('assets/imgs/texture.jpg');
+      opacity: 0.3;
+      pointer-events:none;
+      height: 100%;
+      width: 100%;
+      ">
+    </div>
+
+    <div id="over_map2" style="
+      position: absolute; top: 0px; left: 0px; z-index: 99;
+      background-image: url('assets/imgs/texture2.jpg');
+      opacity: 0.2;
+      pointer-events:none;
+      height: 100%;
+      width: 100%;
+      ">
+    </div>
+    <button (click)="onClickResetMap()" *ngIf="selectedArea"
+        ion-button block icon-start color="reset"
+        style="position: absolute; top: 90%;z-index: 99;"
+    ><ion-icon name="refresh"></ion-icon> Reset Map</button>
+  </div>
+
+
 </ion-content>

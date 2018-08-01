@@ -1,0 +1,37 @@
+<!--
+  Generated template for the BrewsListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <!--<ion-title>brews-list</ion-title>-->
+    <ion-searchbar
+      [(ngModel)]="searchKey"
+      (ionInput)="onChangeInput($event)"
+      placeholder="Αναζήτηση"
+    >
+    </ion-searchbar>
+  </ion-navbar>
+
+
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+    <ion-item *ngFor="let brew of currentBrews" (click)="onClickItem(brew)">
+      <ion-avatar item-start>
+        <img [src]="'http://138.68.180.1/api/images/pins/150X150cp/' + brew.icon">
+      </ion-avatar>
+      <h2>{{brew.name.split("/")[1]}}</h2>
+      <h3>{{brew.city.split("/")[1]}}</h3>
+      <p>3 μπύρες</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
