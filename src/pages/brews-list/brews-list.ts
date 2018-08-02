@@ -23,7 +23,7 @@ export class BrewsListPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private dataSrv: DataService) {
+              public dataSrv: DataService) {
   }
 
   ionViewDidLoad() {

@@ -50,6 +50,8 @@ export class HomePage {
         'map-canvas',
         this.onClickBrewsMarker(this),
         this.onClickAreasMarker(this),
+        this.dataSrv.pinsPath,
+        this.dataSrv.logosPath
         // function(data){console.log("fun2")},
         // this.onClickBrewsMarker(this),
         // this.onClickAreasMarker(this)

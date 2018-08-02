@@ -18,7 +18,7 @@ export class MyApp {
 
   constructor(
     platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
-    private dataSrv: DataService,
+    public dataSrv: DataService,
     private loadingCtrl: LoadingController
     // private navCtrl: NavController
     ) {

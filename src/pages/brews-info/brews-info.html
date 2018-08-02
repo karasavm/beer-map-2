@@ -8,7 +8,7 @@
 
 
   <ion-card class="modal">
-    <img class="modal-img" [src]="'assets/compressed/' + brew.icon"/>
+    <img class="modal-img" [src]="dataSrv.logosPath + brew.icon"/>
     <ion-card-content>
       <ion-card-title text-center="">
         {{brew.name.split("/")[1]}}

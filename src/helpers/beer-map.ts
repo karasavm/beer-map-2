@@ -25,14 +25,17 @@ export class BeerMap {
   areasLayer: VectorLayer;
   onClickBrewsMarker: any;
   onClickAreasMarker: any;
-
-  constructor(brews, areas, divCanvas, onClickBrewsMarker, onClickAreasMarker) {
-    console.log(onClickBrewsMarker)
+  pinsPath: string;
+  imgsPath: string;
+  constructor(brews, areas, divCanvas, onClickBrewsMarker, onClickAreasMarker, pinsPath, imgsPath) {
+    console.log(onClickBrewsMarker);
     this.brews = brews;
     this.areas = areas;
     this.onClickBrewsMarker = onClickBrewsMarker;
     this.onClickAreasMarker = onClickAreasMarker;
     this.divCanvas = divCanvas;
+    this.pinsPath = pinsPath;
+    this.imgsPath = imgsPath;
   }
 
   _createBrewsLayers() {
@@ -61,7 +64,7 @@ export class BeerMap {
           // anchorYUnits: 'fraction',
           scale: 0.3,
           // src: 'assets/150x150cp/' + this.areas[i].icon
-          src: 'assets/150x150cp/' + this.brews[i].icon
+          src: this.pinsPath + this.brews[i].icon
         }))
       });
       var labelStyle = new Style({
