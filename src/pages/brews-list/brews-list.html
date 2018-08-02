@@ -26,7 +26,7 @@
   <ion-list>
     <ion-item *ngFor="let brew of currentBrews" (click)="onClickItem(brew)">
       <ion-avatar item-start>
-        <img [src]="'assets/150X150cp/' + brew.icon">
+        <img [src]="'assets/150x150cp/' + brew.icon">
       </ion-avatar>
       <h2>{{brew.name.split("/")[1]}}</h2>
       <h3>{{brew.city.split("/")[1]}}</h3>
