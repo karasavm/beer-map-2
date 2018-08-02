@@ -27,10 +27,11 @@ self.toolbox.precache(
 // dynamically cache any other local assets
 self.toolbox.router.any('/*', self.toolbox.fastest);
 
-self.toolbox.router.get(/^https:\/\/3a9e93c6.ngrok.io\/api\/images\//, self.toolbox.cacheFirst);
-self.toolbox.router.get(/^https:\/\/stamen-tiles-b.a.ssl.fastly.net\//, self.toolbox.cacheFirst);
+// self.toolbox.router.get(/^https:\/\/3a9e93c6.ngrok.io\/api\/images\//, self.toolbox.cacheFirst);
+// self.toolbox.router.get(/^https:\/\/stamen-tiles-b.a.ssl.fastly.net\//, self.toolbox.cacheFirst);
 
 
 // for any other requests go to the network, cache,
 // and then only use that cached resource if your user goes offline
-self.toolbox.router.default = self.toolbox.networkFirst;
+// self.toolbox.router.default = self.toolbox.networkFirst;
+self.toolbox.router.default = self.toolbox.cacheFirst;
