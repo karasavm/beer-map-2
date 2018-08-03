@@ -27,8 +27,8 @@ self.toolbox.precache(
 // dynamically cache any other local assets
 // self.toolbox.router.any('/*', self.toolbox.fastest);
 
-self.toolbox.router.get(/^https:\/\/mikesdevserver.tk\/api\/images\//, self.toolbox.cacheFirst);
-self.toolbox.router.get(/^https:\/\/stamen-tiles-b.a.ssl.fastly.net\//, self.toolbox.cacheFirst);
+// self.toolbox.router.get(/^https:\/\/mikesdevserver.tk\/api\/images\//, self.toolbox.cacheFirst);
+// self.toolbox.router.get(/^https:\/\/stamen-tiles-b.a.ssl.fastly.net\//, self.toolbox.cacheFirst);
 
 
 // for any other requests go to the network, cache,
