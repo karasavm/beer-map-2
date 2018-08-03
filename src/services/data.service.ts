@@ -13,10 +13,10 @@ export class DataService {
   map: any = null;
   selectedArea: any = null;
   loading: any;
+  // public pinsPath: string = 'https://mikesdevserver.tk/api/images/pins/150X150cp/';
   public pinsPath: string = 'https://mikesdevserver.tk/api/images/pins/150X150cp/';
-  // public pinsPath: string = 'https://138.68.180.1/api/images/pins/150X150cp/';
+  // public logosPath: string = 'http://mikesdevserver.tk/api/images/pins/compressed/';
   public logosPath: string = 'https://mikesdevserver.tk/api/images/pins/compressed/';
-  // public logosPath: string = 'http://138.68.180.1/api/images/pins/compressed/';
 
 
 
