@@ -1,20 +1,37 @@
 <ion-header>
 
-  <ion-toolbar>
-    <ion-buttons right>
-      <button ion-button icon-only color="royal" *ngIf="!selectedArea" (click)="onClickInfo()">
-        <ion-icon name="information-circle"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title text-center *ngIf="!selectedArea">Ελληνικές Μικροζυθοποιίες</ion-title>
+  <ion-toolbar *ngIf = 'true'>
+    <!--<ion-buttons right>-->
+      <!--<button ion-button icon-only color="royal" *ngIf="!selectedArea" (click)="onClickList()">-->
+        <!--<ion-icon name="information-circle"></ion-icon>-->
+      <!--</button>-->
+    <!--</ion-buttons>-->
+    <ion-title text-center *ngIf="!selectedArea">{{contents.length}} Μικροζυθοποιίες</ion-title>
     <ion-title text-center *ngIf="selectedArea">{{selectedArea.name}}</ion-title>
 
 
+    <!--<ion-buttons left>-->
+      <!--<button *ngIf="!selectedArea"ion-button icon-only color="royal" (click)="onClickSearch()">-->
+        <!--<ion-icon name="search"></ion-icon>-->
+      <!--</button>-->
+    <!--</ion-buttons>-->
+
     <ion-buttons left>
-      <button *ngIf="!selectedArea"ion-button icon-only color="royal" (click)="onClickSearch()">
-        <ion-icon name="search"></ion-icon>
+      <button ion-button icon-only color="royal" menuToggle>
+        <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
+
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf = 'true'>
+    <ion-searchbar
+      (ionCancel)="onClickSearchBack()"
+      [(ngModel)]="searchKey"
+      (ionInput)="onChangeSearchInput($event)"
+      placeholder="ζυθοποιία, πόλη, μπύρα"
+    >
+    </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -22,34 +39,100 @@
 
 
   <div id="wrapper" style="position: relative; height: 100%">
-    <div #map id="map-canvas" style="height: 100%;width:100%;position: relative;">
 
-    </div>
+    <!--MAP-->
+    <div #map id="map-canvas"
 
-    <div id="over_map" style="
-      position: absolute; top: 0px; left: 0px; z-index: 99;
-      background-image: url('assets/imgs/texture.jpg');
-      opacity: 0.3;
+         style="height: 100%;background-color: #acdcd0;width:100%;position: relative;"></div>
+    <!--ecc080-->
+
+
+    <!--<div id="over_map" style="-->
+      <!--position: absolute; top: 0px; left: 0px; z-index: 99;-->
+      <!--background-image: url('assets/imgs/texture.jpg');-->
+      <!--opacity: 0.003;-->
+      <!--pointer-events:none;-->
+      <!--height: 100%;-->
+      <!--width: 100%;-->
+      <!--">-->
+    <!--</div>-->
+
+    <!--<div id="over_map2" style="-->
+      <!--position: absolute; top: 0px; left: 0px; z-index: 99;-->
+      <!--background-image: url('assets/imgs/texture2.jpg');-->
+      <!--opacity: 0.002;-->
+      <!--pointer-events:none;-->
+      <!--height: 100%;-->
+      <!--width: 100%;-->
+      <!--">-->
+    <!--</div>-->
+
+
+    <!--LIST -->
+    <div *ngIf="!mapMode">
+      <div id="over_map_list_background"
+           style="
+      position: absolute; top: 0px; left: 0px; z-index: 98;
+      background-color: white;
       pointer-events:none;
       height: 100%;
       width: 100%;
       ">
-    </div>
+      </div>
 
-    <div id="over_map2" style="
+      <div id="over_map_list" style="
       position: absolute; top: 0px; left: 0px; z-index: 99;
-      background-image: url('assets/imgs/texture2.jpg');
-      opacity: 0.2;
-      pointer-events:none;
       height: 100%;
       width: 100%;
       ">
+        <ion-list inset style="margin: 0;">
+          <ion-item *ngFor="let brew of currentBrews" (click)="onClickBrewItem(brew)">
+            <ion-avatar item-start>
+              <img [src]="dataSrv.pinsPath + brew.icon">
+            </ion-avatar>
+            <h2>{{brew.name.split("/")[1]}}</h2>
+            <h3>{{brew.city.split("/")[1]}}</h3>
+            <p>3 μπύρες</p>
+          </ion-item>
+        </ion-list>
+      </div>
     </div>
-    <button (click)="onClickResetMap()" *ngIf="selectedArea"
-        ion-button block icon-start color="reset"
-        style="position: absolute; top: 90%;z-index: 99;"
-    ><ion-icon name="refresh"></ion-icon> Reset Map</button>
+
+
+    <!--REST MAP BUTTON-->
+    <!--<button (click)="onClickResetMap()" *ngIf="selectedArea"-->
+        <!--ion-button block icon-start color="reset"-->
+        <!--style="position: absolute; top: 90%;z-index: 98;"-->
+    <!--&gt;<ion-icon name="refresh"></ion-icon> Reset Map</button>-->
+
+    <!--MODE BUTTON-->
+
+    <button (click)="onClickMode()" round
+            ion-button icon-start color="primary"
+            style="position: fixed; bottom: 10%;right: 10%;z-index: 100;"
+    >{{modeLabel}}</button>
+
   </div>
 
 
+
+
+
+
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="mapMode" (ionChange)="onChangeSegment()">
+      <ion-segment-button [value]="true">
+        <ion-icon name="map"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button [value]="false">
+        <ion-icon name="list"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+
+
+  </ion-toolbar>
+</ion-footer>
+

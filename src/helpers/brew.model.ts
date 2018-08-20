@@ -9,4 +9,5 @@ export interface Brew {
     icon;
     area;
     id;
+    type;
 }

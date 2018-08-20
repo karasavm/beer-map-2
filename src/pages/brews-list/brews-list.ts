@@ -11,7 +11,10 @@ import {normalizeKey} from "../../helpers/lib";
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+  "name": "brews-list",
+  "segment": "brews-list"
+})
 @Component({
   selector: 'page-brews-list',
   templateUrl: 'brews-list.html',

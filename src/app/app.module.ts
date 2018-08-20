@@ -16,31 +16,20 @@ import {BrewsInfoPageModule} from "../pages/brews-info/brews-info.module";
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    // BrewsListPage,
-    // BrewsInfoPage
+    // HomePage
   ],
   imports: [
 
-    IonicModule.forRoot(MyApp, {}, {
-      links: [
-        {component: HomePage, name: 'home'},
-        {component: BrewsListPage, name: 'brews-list'},
-        {component: BrewsInfoPage, name: 'brews-info'},
-      ]
-    }),
+
     BrowserModule,
     HttpClientModule,
-    BrewsListPageModule,
-    BrewsInfoPageModule,
+    IonicModule.forRoot(MyApp)
     // IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    // BrewsInfoPage,
-    // BrewsListPage
+    // HomePage
   ],
   providers: [
     StatusBar,

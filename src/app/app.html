@@ -1,6 +1,44 @@
 
 <!--<p *ngIf="!brews">Loading ...</p>-->
-<ion-nav #myNav *ngIf="brews" [root]="rootPage"></ion-nav>
+
+
+
+<div *ngIf="brews">
+
+  <ion-nav #content [root]="rootPage" swipeBackEnabled="false"></ion-nav>
+
+  <ion-menu [content]="content" >
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list class="outer-content">
+        <ion-list-header>
+          <!--Επικοινωνία-->
+        </ion-list-header>
+        <button ion-item (click)="onClickInfo()" menuClose>
+          <ion-icon item-start  name="information-circle" [color]="isActive()"></ion-icon>
+          Επικοινωνία
+        </button>
+
+
+        <!--<button ion-item menuClose>-->
+          <!--<ion-icon item-start name="search" [color]="isActive()"></ion-icon>-->
+          <!--test-->
+        <!--</button>-->
+      </ion-list>
+
+    </ion-content>
+
+  </ion-menu>
+
+</div>
+
+
 <!--<ion-spinner></ion-spinner>-->
 
 <div *ngIf="brews">

@@ -90,10 +90,13 @@ export class DataService {
     return null;
   }
 
-  setMap(map){ this.map = map;}
+  setMap(map){ this.map = map; return this.map;}
+
+
   getMap(){ return this.map;}
   setSelectedAreaId(area) {console.log("selected area", area); this.selectedArea = this.getAreaById(area);}
   getSelectedAreea() {return this.selectedArea;}
+
 
 }
 

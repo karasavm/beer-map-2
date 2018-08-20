@@ -10,7 +10,11 @@ import {DataService} from "../../services/data.service";
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+
+@IonicPage({
+  "name": "brews-info",
+  "segment": "brews-info"
+})
 @Component({
   selector: 'page-brews-info',
   templateUrl: 'brews-info.html',
