@@ -24,6 +24,10 @@ export class DataService {
     private http: HttpClient,
     private loadingCtrl: LoadingController
   ) {
+
+  }
+
+  createLoader() {
     this.loading = this.loadingCtrl.create({
       // spinner: 'hide',
       content: `
@@ -32,7 +36,6 @@ export class DataService {
       </div>`,
     });
   }
-
   fetchData() {
     console.log('fetching data');
 

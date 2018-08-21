@@ -27,7 +27,10 @@ export class Home2Page {
 
   @ViewChild('map') mapElement: ElementRef;
   searchKey = '';
+
   brews: Brew[];
+  areas: any;
+  mapMode = true;
   currentBrewsMode: Brew[];
   currentBrews: Brew[];
   contents: Brew[] = [];
@@ -41,29 +44,47 @@ export class Home2Page {
     ) {
 
     this.brews = this.dataSrv.getBrews();
+    this.areas = this.dataSrv.getAreas();
     // this.areas = this.dataSrv.getAreas();
     this.currentBrewsMode = this.brews.slice();
     this.currentBrews = this.brews.slice();
+
+
     // this.contents = this.brews.slice();
   }
 
   ionViewDidLoad(){
+    console.log("view did load home2")
+    // this.dataSrv.createLoader();
+    // this.dataSrv.loading.present();
+
+
     let that = this;
     this.beerMap = new BeerMapGoogle(
       this.brews,
+      this.areas,
       this.mapElement.nativeElement,
       (brew) => {
         console.log("brew marker clicked!!");
         this.navCtrl.push('brews-info', {brew: brew});
       },
       (data) => {
+
         this.contents = data.contents;
         this.chDetector.detectChanges()
+      },
+      () => {
+        this.dataSrv.loading.dismiss();
+        console.log("onLoadMap")
       },
       this.dataSrv.pinsPath,
       this.dataSrv.logosPath
     );
+
     this.beerMap.init();
+    // this.dataSrv.loading.present();
+    // let that = this;
+
   }
 
 
@@ -91,6 +112,7 @@ export class Home2Page {
 
   }
 
+
   focusOut() {
     // return;
     let activeElement = <HTMLElement>document.activeElement;
@@ -108,7 +130,25 @@ export class Home2Page {
     console.log('sssss')
   }
 
+  onClickMapMode() {
+    this.mapMode = !this.mapMode;
+  }
 
+  onClickBrewItem(brew) {
+
+    this.navCtrl.push('brews-info', {brew: brew});
+  }
+
+  isActive(s) {
+    if (s==='map' && this.mapMode) {
+      return 'primary';
+    }
+    if (s==='list' && !this.mapMode) {
+      return 'primary';
+    }
+
+
+  }
 }
 
 

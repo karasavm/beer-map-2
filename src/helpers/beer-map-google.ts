@@ -4,17 +4,22 @@ declare var google;
 
 let MAX_ZOOM = 15;
 let MIN_ZOOM = 3;
+let GREECE_COORDS = {
+  lat: '39.074208',
+  log: '21.824312'
+};
 // let PINS_PATH = 'images/pins/150x150cp/';
 // let LOGO_PATH = 'images/pins/compressed/';
 // let onGroupMode = 0;
 // let initState = false;
 // let on
-// let INITIAL_ZOOM = null;
+let INITIAL_ZOOM = 3;
 let INITIAL_CENTER = new google.maps.LatLng(39.074208, 22.824311999999964);
 
 
 export class BeerMapGoogle{
   brews: any;
+  areas: any;
   map: any;
 
   divCanvas: string;
@@ -24,15 +29,18 @@ export class BeerMapGoogle{
 
   pinsPath: string;
   imgsPath: string;
-
+  onLoadMap: any;
   brewsMarkers = [];
-  constructor(brews, divCanvas, onClickBrewsMarker,onMoveMap, pinsPath, imgsPath) {
+  areasMarkers = [];
+  constructor(brews, areas, divCanvas, onClickBrewsMarker,onMoveMap,onLoadMap, pinsPath, imgsPath) {
     this.brews = brews;
+    this.areas = areas;
     this.onClickBrewsMarker = onClickBrewsMarker;
     this.onMoveMap = onMoveMap;
     this.divCanvas = divCanvas;
     this.pinsPath = pinsPath;
     this.imgsPath = imgsPath;
+    this.onLoadMap = onLoadMap;
   }
 
   createBrewsMarkers() {
@@ -58,7 +66,7 @@ export class BeerMapGoogle{
       let marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, log),
         // title: legend,
-        // animation: null,
+        animation: google.maps.Animation.DROP,
         // draggable: false,
         // shape: shape,
         // clickable: true,
@@ -66,21 +74,96 @@ export class BeerMapGoogle{
         // icon: getImageObj('images/pins/60x60/eza.png', MARKER_CAP_SIZE),
         // zIndex: ZINDEX_MARKER
       });
-
       marker.brew = this.brews[i];
       this.brewsMarkers.push(marker);
-
-
     }
   }
-  loadMarkers() {
-    for (let i=0; i < this.brewsMarkers.length; i++) {
-      this.brewsMarkers[i].setMap(this.map);
+
+  createAreasMarkers() {
+    for (let i=0; i < this.areas.length; i++) {
+
+      let lat = this.areas[i].latLng.split(',')[0];
+      let log = this.areas[i].latLng.split(',')[1];
+      // console.log(lat, log);
+
+      // let image = {
+      //   origin: new google.maps.Point(0, 0),
+      //   url: this.pinsPath + this.brews[i].icon,
+      //   // url: 'assets/150x150cp/' + this.brews[i].icon.split('.')[0] + '.jpg',
+      //   labelOrigin: new google.maps.Point(40,40),
+      //   // scaledSize: new google.maps.Size(60, 88), // short pin
+      //   scaledSize: new google.maps.Size(40, 40), // cap
+      //   // anchor: new google.maps.Point(31, 88), // short pin
+      //   anchor: new google.maps.Point(20, 20), // cap
+      // };
+
+      let marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, log),
+        // title: legend,
+        animation: google.maps.Animation.DROP,
+        // draggable: false,
+        // shape: shape,
+        // clickable: true,
+        // icon: image,
+        // icon: getImageObj('images/pins/60x60/eza.png', MARKER_CAP_SIZE),
+        // zIndex: ZINDEX_MARKER
+      });
+      marker.area = this.areas[i];
+      this.areasMarkers.push(marker);
+    }
+  }
+
+  loadBrewsMarkers() {
+    let l = 15;
+
+    // for (let i=0; i < this.brewsMarkers.length; i++) {
+    //   // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 3000) + 1));
+    //   this.brewsMarkers[i].setMap(this.map);
+    //   this.brewsMarkers[i].setVisible(false);
+    //   this.brewsMarkers[i].setMap(null);
+    //   this.brewsMarkers[i].setVisible(true);
+    //
+    // }
+
+    for (let i=0; i < l; i++) {
+      // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 2000) + 1));
+      dropMarker(this.map, this.brewsMarkers[i],  Number(1500/l)*(i+1));
+
+      // this.brewsMarkers[i].setMap(this.map);
+    }
+    setTimeout(() => {
+      for (let i=l; i < this.brewsMarkers.length; i++) {
+        // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 3000) + 1));
+        this.brewsMarkers[i].setMap(this.map);
+        // this.brewsMarkers[i].setAnimation(google.maps.Animation.DROP);
+      }
+    }, 2500)
+
+
+    let list = [];
+    for (let i=0; i < this.brewsMarkers.length;i++) {
+      setTimeout(() => {
+        list.push(1)
+        this.onMoveMap({contents: list});
+      }, Number(2500/this.brewsMarkers.length)*(i+1));
+    }
+  }
+
+  loadAreasMarkers() {
+    for (let i=0; i < this.areasMarkers.length; i++) {
+      this.areasMarkers[i].setMap(this.map);
+    }
+  }
+  hideAreasMarkers() {
+    for (let i=0; i < this.areasMarkers.length; i++) {
+      this.areasMarkers[i].setMap(null);
     }
   }
 
   init() {
+    console.log("init");
     this.createBrewsMarkers();
+    this.createAreasMarkers();
 
 
     let beerMapOptions = {
@@ -117,14 +200,71 @@ export class BeerMapGoogle{
     // this.map.overlayMapTypes.push(textureLayer);
 
 
-
-
-
-
     this.registerEvents();
-    this.loadMarkers();
-    this.fitBounds(this.brewsMarkers);
+    let size = 70;
+    let image = {
+      origin: new google.maps.Point(0, 0),
+      url: 'assets/150x150cp/brews.png',
+      // url: 'assets/150x150cp/' + this.brews[i].icon.split('.')[0] + '.jpg',
+      labelOrigin: new google.maps.Point(13,57),
+      scaledSize: new google.maps.Size(size, size), // cap
+      anchor: new google.maps.Point(size/2, size/2), // cap
+    };
+
+    let marker = new google.maps.Marker({
+      position: new google.maps.LatLng(GREECE_COORDS.lat, GREECE_COORDS.log),
+      label: {
+        color: 'white',
+        fontFamily_: null,
+        fontSize: '19px',
+        fontWeight: 'bold',
+        text: this.brews.length.toString()
+      },
+      // title: legend,
+      animation: google.maps.Animation.DROP,
+      // draggable: false,
+      // shape: shape,
+      // clickable: true,
+      icon: image,
+      // icon: getImageObj('images/pins/60x60/eza.png', MARKER_CAP_SIZE),
+      zIndex: 100
+    });
+    let that = this;
+
+    setTimeout(function(){
+      // that.loadAreasMarkers();
+
+      marker.setMap(that.map);
+      setTimeout(function(){
+        that.loadBrewsMarkers();
+        setTimeout(()=> {
+          marker.setMap(null);
+          that.fitBounds(that.brewsMarkers);
+        },3000)
+      }, 500)
+
+    }, 500)
+
+
+
+    google.maps.event.addListenerOnce(this.map, 'idle', ()=> {
+      console.log("ffffffffff")
+      setTimeout(function() {
+        // marker.setMap(null);
+        // that.fitBounds(that.brewsMarkers);
+        // that.loadAreasMarkers();
+        setTimeout(function() {
+          // that.hideAreasMarkers();
+          // that.loadBrewsMarkers();
+        }, 1500)
+      }, 1500)
+    })
+    // this.loadBrewsMarkers();
+    // this.loadAreasMarkers();
+    // this.fitBounds(this.brewsMarkers);
   }
+
+
 
   fitBounds(markers) {
     let bounds = new google.maps.LatLngBounds(0,0);
@@ -150,10 +290,18 @@ export class BeerMapGoogle{
 
     // MAP
     this.map.addListener("bounds_changed", () => {
+      console.log("ssucceess")
       this.map.boundsChanged = true;
     });
 
+    google.maps.event.addListenerOnce(this.map, 'idle', () => {
+      // do something only the first time the map is loaded
+      this.onLoadMap();
+
+    });
+
     this.map.addListener("idle", () => {
+      console.log("idle--")
       if (this.map.boundsChanged) {
         console.log("idle:bounds_changed");
         this.onMoveMap({
@@ -185,6 +333,7 @@ export class BeerMapGoogle{
     }
     return contents;
   }
+
   showBrewsMarkers(brews, fit=true) {
     let markers = [];
     for (let i=0; i < this.brewsMarkers.length; i++) {
@@ -201,16 +350,15 @@ export class BeerMapGoogle{
     }
 
     this.fitBounds(markers);
+
     // this.onMoveMap({contents: this.findContents(markers)});
     this.onMoveMap({contents: brews});
 
   }
 
-
-
   showAreasMarkers(fit=true) {}
 
-  showAllBrews(fit=true) {}
+
   showBrewsMarkerZoomTo(brewId, duration){}
 
   fitBrewsMarkers(id) {}
@@ -220,7 +368,13 @@ export class BeerMapGoogle{
   showBrewsFeatures(brews) {}
 
 }
+function dropMarker(map, marker, delay) {
 
+  marker.setAnimation(google.maps.Animation.DROP);
+  setTimeout(function() {
+    marker.setMap(map);
+  }, delay)
+}
 
 const map_style = [
   {

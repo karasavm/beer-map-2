@@ -33,13 +33,14 @@ export class MyApp {
       splashScreen.hide();
     });
 
+    this.dataSrv.createLoader();
     this.dataSrv.loading.present();
     // platform.exitApp();
 
     this.dataSrv.fetchData()
       .then(data => {
         this.brews = this.dataSrv.getBrews();
-        this.dataSrv.loading.dismiss();
+        // this.dataSrv.loading.dismiss();
       });
 
 

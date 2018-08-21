@@ -8,7 +8,7 @@
 
 
   <ion-toolbar>
-    <ion-title>{{contents.length}} Ζυθοποιίες</ion-title>
+    <!--<ion-title>{// contents.length}} Ζυθοποιίες</ion-title>-->
     <ion-buttons left>
       <button ion-button icon-only color="royal" menuToggle>
         <ion-icon name="menu"></ion-icon>
@@ -44,12 +44,54 @@
     <div id="over_map" style="
     position: absolute; top: 0px; left: 0px; z-index: 99;
     background-image: url('assets/imgs/texture.jpg');
-    opacity: 0.3;
+    opacity: 0.35;
     pointer-events:none;
     height: 100%;
     width: 100%;
     ">
     </div>
+
+    <div id="legend" style="
+    position: fixed; top: 60px; left: 5%; z-index: 99 ;
+    pointer-events:none;
+    ">
+      <h3 ion-text color="light">{{contents.length}} Ζυθοποιίες</h3>
+    </div>
+
+
+    <div *ngIf="!mapMode" style="pointer-events: none">
+      <div id="over_map_list_background"
+           style="
+      position: absolute; top: 0px; left: 0px; z-index: 98;
+      background-color: white;
+      pointer-events:none;
+      height: 100%;
+      width: 100%;
+      ">
+      </div>
+
+      <div id="over_map_list" style="
+      position: absolute; top: 0px; left: 0px; z-index: 99;
+      height: 100%;
+      width: 100%;
+      ">
+        <ion-list inset style="margin: 0;">
+          <ion-item *ngFor="let brew of currentBrews" (click)="onClickBrewItem(brew)">
+            <ion-avatar item-start>
+              <img [src]="dataSrv.pinsPath + brew.icon">
+            </ion-avatar>
+            <h2>{{brew.name.split("/")[1]}}</h2>
+            <h3>{{brew.city.split("/")[1]}}</h3>
+            <p>3 μπύρες</p>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+
+    <!--<button (click)="onClickMapMode()" round-->
+            <!--ion-button icon-start color="primary"-->
+            <!--style="position: fixed; bottom: 10%;right: 10%;z-index: 100;"-->
+    <!--&gt;{{modeLabel}}</button>-->
 
     <!--<div id="over_map2" style="-->
     <!--position: absolute; top: 0px; left: 0px; z-index: 99;-->
@@ -62,3 +104,22 @@
     </div>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar text-center>
+    <ion-buttons>
+      <button ion-button icon-start color="royal" (click)="onClickMapMode()" [color]="isActive('map')">
+
+        <ion-icon name="map"></ion-icon>
+        Map
+      </button>
+      <button ion-button icon-start color="royal" (click)="onClickMapMode()" [color]="isActive('list')">
+
+        <ion-icon name="list"></ion-icon>
+        List
+      </button>
+    </ion-buttons>
+
+
+  </ion-toolbar>
+</ion-footer>
