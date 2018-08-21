@@ -38,11 +38,7 @@ export class HomePage {
 
   )
   {
-    this.brews = this.dataSrv.getBrews();
-    this.areas = this.dataSrv.getAreas();
-    this.currentBrewsMode = this.brews.slice();
-    this.currentBrews = this.brews.slice();
-    this.contents = this.brews;
+
     const that = this;
 
 
