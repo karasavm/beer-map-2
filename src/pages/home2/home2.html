@@ -56,7 +56,7 @@
 </ion-header>
 
 
-<ion-content (click)="focusOut()" (touchstart)="focusOut()">
+<ion-content (click)="focusOut()" (touchstart)="focusOut()" >
 
   <div id="wrapper" style="position: relative; height: 100%; pointer-events:auto">
 
@@ -67,8 +67,9 @@
 
     <div id="over_map" style="
     position: absolute; top: 0px; left: 0px; z-index: 99;
-    background-image: url('assets/imgs/texture.jpg');
-    opacity: 0.35;
+    background-image: url('assets/imgs/texture_04.png');
+
+    /*opacity: 0.35;*/
     pointer-events:none;
     height: 100%;
     width: 100%;
@@ -102,12 +103,7 @@
       width: 100%;
       ">
         <ion-list style="margin: 0;" >
-          <ion-item
-            style="
-            /*background-color:#ecc080;*/
-            background-color:#ecc080;
-            background-image: url('assets/imgs/texture_04.png');
-            background-repeat: repeat-x;">
+          <ion-item class="main_color">
             <br>
             <div *ngIf="showSearch">
               <br>
@@ -118,11 +114,7 @@
 
           </ion-item>
 
-          <ion-item
-            style="
-            background-color:#ecc080;
-            background-image: url('assets/imgs/texture_04.png');
-            background-repeat: repeat-x;"
+          <ion-item class="main_color"
             *ngFor="let brew of currentBrews"  (click)="onClickBrewItem(brew)">
             <ion-avatar item-start>
               <img [src]="dataSrv.pinsPath + brew.icon">

@@ -240,6 +240,9 @@ export class BeerMapGoogle{
         setTimeout(()=> {
           marker.setMap(null);
           that.fitBounds(that.brewsMarkers);
+          google.maps.event.addListenerOnce(that.map, 'idle', ()=>{
+            that.map.setZoom(that.map.getZoom()+1)
+          })
         },3000)
       }, 500)
 
