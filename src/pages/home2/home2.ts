@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Searchbar} from 'ionic-angular';
 import {DataService} from "../../services/data.service";
 import {Brew} from "../../helpers/brew.model";
 import {normalizeKey} from "../../helpers/lib";
@@ -26,6 +26,8 @@ import {BeerMapGoogle} from "../../helpers/beer-map-google";
 export class Home2Page {
 
   @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('searchbar') searchbar:Searchbar;
+
   searchKey = '';
 
   brews: Brew[];
@@ -34,7 +36,7 @@ export class Home2Page {
   currentBrewsMode: Brew[];
   currentBrews: Brew[];
   contents: Brew[] = [];
-
+  showSearch = true;
   beerMap: any;
   constructor(
     public navCtrl: NavController,
@@ -54,6 +56,7 @@ export class Home2Page {
   }
 
   ionViewDidLoad(){
+    this.showSearch = false;
     console.log("view did load home2")
     // this.dataSrv.createLoader();
     // this.dataSrv.loading.present();
@@ -74,7 +77,7 @@ export class Home2Page {
         this.chDetector.detectChanges()
       },
       () => {
-        this.dataSrv.loading.dismiss();
+        // this.dataSrv.loading.dismiss();
         console.log("onLoadMap")
       },
       this.dataSrv.pinsPath,
@@ -141,13 +144,26 @@ export class Home2Page {
 
   isActive(s) {
     if (s==='map' && this.mapMode) {
-      return 'primary';
+      return 'dark_brown';
     }
     if (s==='list' && !this.mapMode) {
-      return 'primary';
+      return 'dark_brown';
     }
+    return 'brown'
+  }
 
+  onClickSearch() {
+    this.showSearch = true;
+  // @ViewChild('searchbar') tst:Searchbar;
+    this.chDetector.detectChanges();
+    this.searchbar.setFocus();
+  }
 
+  onClickSearchBack() {
+    // when back on searchbar
+    this.showSearch = false;
+    this.searchKey = '';
+    this.onChangeSearchInput();
   }
 }
 

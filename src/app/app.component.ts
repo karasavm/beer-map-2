@@ -10,7 +10,7 @@ import {Brew} from "../helpers/brew.model";
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = 'home';
+  rootPage:any = 'home2';
   brews: Brew[];
 
   // @ViewChild('myNav') navCtrl: NavController
@@ -40,8 +40,9 @@ export class MyApp {
     this.dataSrv.fetchData()
       .then(data => {
         this.brews = this.dataSrv.getBrews();
-        // this.dataSrv.loading.dismiss();
+        this.dataSrv.loading.dismiss();
       });
+
 
 
   }

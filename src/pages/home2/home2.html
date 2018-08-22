@@ -4,30 +4,54 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
 
+<!--ecc080 water-->
+<!--eba251 land-->
+<ion-header no-border>
 
-  <ion-toolbar>
-    <!--<ion-title>{// contents.length}} Ζυθοποιίες</ion-title>-->
-    <ion-buttons left>
-      <button ion-button icon-only color="royal" menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-  <!--</ion-toolbar>-->
+  <ion-navbar class="test" transparent [color]="{true: 'dark', false: 'dark'}[mapMode]" *ngIf="true">
+      <ion-toolbar>
+        <!--<ion-title>{// contents.length}} Ζυθοποιίες</ion-title>-->
+        <ion-buttons left *ngIf="!showSearch">
+          <button ion-button icon-only color="royal" menuToggle>
+            <ion-icon name="menu"></ion-icon>
+          </button>
+        </ion-buttons>
+        <!--</ion-toolbar>-->
+        <ion-title text-center *ngIf="!showSearch">
+          {{contents.length}} ΖΥΘΟΠΟΙΙΕΣ
+        </ion-title>
+        <!--<ion-toolbar *ngIf = 'true'>-->
+        <ion-searchbar
+          #searchbar
+          *ngIf="showSearch"
+          [(ngModel)]="searchKey"
+          (ionCancel)="onClickSearchBack()"
+          (ionInput)="onChangeSearchInput($event)"
+          placeholder="ζυθοποιία, πόλη, μπύρα"
+          (ionBlur)="onSearchBlur()"
+          [showCancelButton]="true"
 
-  <!--<ion-toolbar *ngIf = 'true'>-->
-    <ion-searchbar
-      [(ngModel)]="searchKey"
-      (ionCancel)="onClickSearchBack()"
-      (ionInput)="onChangeSearchInput($event)"
-      placeholder="ζυθοποιία, πόλη, μπύρα"
-      (ionBlur)="onSearchBlur()"
+        >
+        </ion-searchbar>
 
-    >
-    </ion-searchbar>
+        <ion-buttons right *ngIf="!showSearch">
+          <button ion-button icon-only color="royal" (click)="onClickSearch()">
+            <ion-icon name="search"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
 
-  </ion-toolbar>
+  </ion-navbar>
+
+  <ion-navbar *ngIf="showSearch" transparent color="dark" style="min-height: auto!important;">
+    <ion-title text-center style="background-color: #80808066">
+      {{contents.length}} ΖΥΘΟΠΟΙΙΕΣ
+    </ion-title>
+  </ion-navbar>
+  <!--603e21-->
+  <!--855329-->
+
 
 </ion-header>
 
@@ -38,7 +62,7 @@
 
     <!--MAP-->
     <div #map id="map"
-    style="height: 100%;background-color: #ecc080;width:100%;position: relative;"></div>
+    style="height: 100%;background-color: #eba251;width:100%;position: relative;"></div>
 
 
     <div id="over_map" style="
@@ -51,38 +75,61 @@
     ">
     </div>
 
-    <div id="legend" style="
-    position: fixed; top: 60px; left: 5%; z-index: 99 ;
-    pointer-events:none;
-    ">
-      <h3 ion-text color="light">{{contents.length}} Ζυθοποιίες</h3>
-    </div>
+    <!--<div id="legend" style="-->
+    <!--position: fixed; top: 60px; left: 5%; z-index: 99 ;-->
+    <!--pointer-events:none;-->
+    <!--">-->
+      <!--<h3 ion-text color="light">{{contents.length}} Ζυθοποιίες</h3>-->
+    <!--</div>-->
 
 
     <div *ngIf="!mapMode" style="pointer-events: auto">
-      <div id="over_map_list_background"
-           style="
-      position: absolute; top: 0px; left: 0px; z-index: 98;
-      background-color: white;
-      pointer-events:none;
-      height: 100%;
-      width: 100%;
-      ">
-      </div>
+      <!--<div id="over_map_list_background"-->
+           <!--style="-->
+      <!--position: absolute; top: 0px; left: 0px; z-index: 98;-->
+      <!--background-color: red;-->
+      <!--/*background-image: url('assets/imgs/texture.jpg');background-repeat: repeat;*/-->
+      <!--pointer-events:none;-->
+      <!--height: 100%;-->
+      <!--width: 100%;-->
+      <!--">-->
+      <!--</div>-->
+
 
       <div id="over_map_list" style="
       position: absolute; top: 0px; left: 0px; z-index: 99;
       height: 100%;
       width: 100%;
       ">
-        <ion-list inset style="margin: 0;">
-          <ion-item *ngFor="let brew of currentBrews" (click)="onClickBrewItem(brew)">
+        <ion-list style="margin: 0;" >
+          <ion-item
+            style="
+            /*background-color:#ecc080;*/
+            background-color:#ecc080;
+            background-image: url('assets/imgs/texture_04.png');
+            background-repeat: repeat-x;">
+            <br>
+            <div *ngIf="showSearch">
+              <br>
+              <br>
+            </div>
+
+            <br>
+
+          </ion-item>
+
+          <ion-item
+            style="
+            background-color:#ecc080;
+            background-image: url('assets/imgs/texture_04.png');
+            background-repeat: repeat-x;"
+            *ngFor="let brew of currentBrews"  (click)="onClickBrewItem(brew)">
             <ion-avatar item-start>
               <img [src]="dataSrv.pinsPath + brew.icon">
             </ion-avatar>
-            <h2>{{brew.name.split("/")[1]}}</h2>
+            <h2 style="color: #603e21">{{brew.name.split("/")[1]}}</h2>
             <h3>{{brew.city.split("/")[1]}}</h3>
-            <p>3 μπύρες</p>
+            <p style="color: #603e21">3 μπύρες</p>
           </ion-item>
         </ion-list>
       </div>
@@ -105,15 +152,15 @@
 
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar text-center>
-    <ion-buttons>
-      <button ion-button icon-start color="royal" (click)="onClickMapMode()" [color]="isActive('map')">
+<ion-footer no-border>
+  <ion-toolbar text-center transparent="">
+    <ion-buttons solid>
+      <button ion-button solid icon-start (click)="onClickMapMode()" [color]="isActive('map')">
 
         <ion-icon name="map"></ion-icon>
         Map
       </button>
-      <button ion-button icon-start color="royal" (click)="onClickMapMode()" [color]="isActive('list')">
+      <button ion-button solid icon-start (click)="onClickMapMode()" [color]="isActive('list')">
 
         <ion-icon name="list"></ion-icon>
         List

@@ -40,7 +40,9 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222,
   facebook:   #3b5998,
-  reset:      #fed766
+  reset:      #fed766,
+  dark_brown: #603e21,
+  brown:      #855329
 );
 
 
@@ -88,3 +90,6 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+
+//$toolbar-background: transparent;

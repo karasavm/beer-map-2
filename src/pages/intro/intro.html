@@ -17,16 +17,28 @@
 
 <!--</ion-content>-->
 
-<ion-header>
+<ion-header >
 
-  <ion-toolbar *ngIf = 'true'>
+  <ion-navbar transparent>
+    <ion-toolbar>
+      <!--<ion-title>{// contents.length}} Ζυθοποιίες</ion-title>-->
+      <ion-buttons left>
+        <button ion-button icon-only color="royal">
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+      <!--</ion-toolbar>-->
 
-    <ion-buttons left>
-      <button ion-button icon-only color="royal" menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
+      <!--<ion-toolbar *ngIf = 'true'>-->
+      <ion-searchbar
+      >
+      </ion-searchbar>
 
-  </ion-toolbar>
+    </ion-toolbar>
+  </ion-navbar>
 
 </ion-header>
+
+<ion-content style="background-image: url('assets/imgs/texture.jpg');background-repeat: repeat;">
+<div>tettts</div>
+</ion-content>
