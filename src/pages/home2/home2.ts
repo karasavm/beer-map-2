@@ -1,9 +1,10 @@
 import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
-import {IonicPage, NavController, NavParams, Searchbar} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams, Searchbar} from 'ionic-angular';
 import {DataService} from "../../services/data.service";
 import {Brew} from "../../helpers/brew.model";
 import {normalizeKey} from "../../helpers/lib";
 import {BeerMapGoogle} from "../../helpers/beer-map-google";
+import {BrewsInfoPage} from "../brews-info/brews-info";
 
 /**
  * Generated class for the Home2Page page.
@@ -38,11 +39,12 @@ export class Home2Page {
   contents: Brew[] = [];
   showSearch = true;
   beerMap: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public dataSrv: DataService,
-    public chDetector: ChangeDetectorRef
+    public chDetector: ChangeDetectorRef,
     ) {
 
     this.brews = this.dataSrv.getBrews();
@@ -56,6 +58,7 @@ export class Home2Page {
   }
 
   ionViewDidLoad(){
+
     this.showSearch = false;
     console.log("view did load home2")
     // this.dataSrv.createLoader();
@@ -70,6 +73,7 @@ export class Home2Page {
       (brew) => {
         console.log("brew marker clicked!!");
         this.navCtrl.push('brews-info', {brew: brew});
+
       },
       (data) => {
 
@@ -85,6 +89,14 @@ export class Home2Page {
     );
 
     this.beerMap.init();
+
+    // setTimeout(() => {
+    //   this.onClickMapMode();
+    //   this.searchKey = 'θεσσαλο';
+    //   this.onChangeSearchInput();
+    // },2000);
+
+
     // this.dataSrv.loading.present();
     // let that = this;
 

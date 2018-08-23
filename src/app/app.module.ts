@@ -11,7 +11,7 @@ import {BrewsInfoPage} from "../pages/brews-info/brews-info";
 import {DataService} from "../services/data.service";
 import {HttpClientModule} from "@angular/common/http";
 import {BrewsListPageModule} from "../pages/brews-list/brews-list.module";
-import {BrewsInfoPageModule} from "../pages/brews-info/brews-info.module";
+// import {BrewsInfoPageModule} from "../pages/brews-info/brews-info.module.ts";
 
 @NgModule({
   declarations: [
@@ -23,7 +23,9 @@ import {BrewsInfoPageModule} from "../pages/brews-info/brews-info.module";
 
     BrowserModule,
     HttpClientModule,
+
     IonicModule.forRoot(MyApp)
+
     // IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

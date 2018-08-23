@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Brew} from "../../helpers/brew.model";
 import {DataService} from "../../services/data.service";
+import {ViewController} from "ionic-angular";
 
 /**
  * Generated class for the BrewsInfoPage page.
@@ -15,6 +16,7 @@ import {DataService} from "../../services/data.service";
   "name": "brews-info",
   "segment": "brews-info"
 })
+
 @Component({
   selector: 'page-brews-info',
   templateUrl: 'brews-info.html',
@@ -24,7 +26,8 @@ export class BrewsInfoPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public dataSrv: DataService
+    public dataSrv: DataService,
+
   ) {
 
 
@@ -39,8 +42,11 @@ export class BrewsInfoPage {
 
 
   ionViewDidLoad() {
+    console.log(history)
+    history.pushState (null, null, "");
     console.log('ionViewDidLoad BrewsInfoPageeeee');
   }
+
 
 
   onClickBtn(type) {
@@ -53,7 +59,8 @@ export class BrewsInfoPage {
       window.open(this.brew.fbUrl, "_blank");
     } else if (type === 'tel') {
       alert(this.brew.tel)
-
     }
   }
+
+
 }

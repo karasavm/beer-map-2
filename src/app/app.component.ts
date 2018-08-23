@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {AlertController, LoadingController, NavController, Platform} from 'ionic-angular';
+import {AlertController, App, LoadingController, NavController, Platform, IonicApp, MenuController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -22,6 +22,7 @@ export class MyApp {
     private loadingCtrl: LoadingController,
     // private navCtrl: NavController,
   private alertCtrl: AlertController,
+    private _app: App, private _ionicApp: IonicApp, private _menu: MenuController
     ) {
 
 
@@ -31,16 +32,48 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+      window.onpopstate = (evt) => {
+
+        // Close menu if open
+        // if (this._menu.isOpen()) {
+        //   this._menu.close ();
+        //   return;
+        // }
+
+        // Close any active modals or overlays
+        // let activePortal = this._ionicApp._loadingPortal.getActive() ||
+        //   this._ionicApp._modalPortal.getActive() ||
+        //   this._ionicApp._toastPortal.getActive() ||
+        //   this._ionicApp._overlayPortal.getActive();
+        //
+        // if (activePortal) {
+        //   activePortal.dismiss();
+        //
+        //   return;
+        // }
+
+        // Navigate back
+        // if (this._app.getRootNav().canGoBack()) this._app.getRootNav().pop();
+
+      };
+
     });
 
-    this.dataSrv.createLoader();
-    this.dataSrv.loading.present();
+    // this.dataSrv.createLoader();
+    // this.dataSrv.loading.present();
     // platform.exitApp();
+    this.brews = this.dataSrv.brews;
 
     this.dataSrv.fetchData()
-      .then(data => {
-        this.brews = this.dataSrv.getBrews();
-        this.dataSrv.loading.dismiss();
+      .subscribe(data => {
+        this.dataSrv.brews = data[0];
+        this.brews = this.dataSrv.brews;
+
+        this.dataSrv.areas = data[1];
+
+        // this.brews = this.dataSrv.getBrews();
+        // this.dataSrv.loading.dismiss();
       });
 
 

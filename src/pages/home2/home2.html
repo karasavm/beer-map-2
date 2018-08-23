@@ -58,7 +58,8 @@
 
 <ion-content (click)="focusOut()" (touchstart)="focusOut()" >
 
-  <div id="wrapper" style="position: relative; height: 100%; pointer-events:auto">
+  <div id="wrapper"
+       style="position: relative; height: 100%; pointer-events:auto">
 
     <!--MAP-->
     <div #map id="map"
@@ -101,8 +102,8 @@
       position: absolute; top: 0px; left: 0px; z-index: 99;
       height: 100%;
       width: 100%;
-      ">
-        <ion-list style="margin: 0;" >
+      " class="main_color">
+        <ion-list style="_margin: 0;" >
           <ion-item class="main_color">
             <br>
             <div *ngIf="showSearch">
@@ -119,7 +120,8 @@
             <ion-avatar item-start>
               <img [src]="dataSrv.pinsPath + brew.icon">
             </ion-avatar>
-            <h2 style="color: #603e21">{{brew.name.split("/")[1]}}</h2>
+
+            <h2 style="color: #ededed">{{brew.name.split("/")[1]}}</h2>
             <h3>{{brew.city.split("/")[1]}}</h3>
             <p style="color: #603e21">3 μπύρες</p>
           </ion-item>

@@ -32,6 +32,11 @@ export class BeerMapGoogle{
   onLoadMap: any;
   brewsMarkers = [];
   areasMarkers = [];
+  defaultZoom: number;
+  defaultCenter: any;
+
+
+
   constructor(brews, areas, divCanvas, onClickBrewsMarker,onMoveMap,onLoadMap, pinsPath, imgsPath) {
     this.brews = brews;
     this.areas = areas;
@@ -240,9 +245,9 @@ export class BeerMapGoogle{
         setTimeout(()=> {
           marker.setMap(null);
           that.fitBounds(that.brewsMarkers);
-          google.maps.event.addListenerOnce(that.map, 'idle', ()=>{
-            that.map.setZoom(that.map.getZoom()+1)
-          })
+          // google.maps.event.addListenerOnce(that.map, 'idle', ()=>{
+          //   that.map.setZoom(that.map.getZoom()+1)
+          // })
         },3000)
       }, 500)
 
@@ -276,18 +281,38 @@ export class BeerMapGoogle{
       bounds.extend(marker.getPosition());
     }
 
-    this.map.fitBounds(bounds);
+
+    if (!this.defaultCenter) {
+      this.map.fitBounds(bounds);
+      google.maps.event.addListenerOnce(this.map, 'idle', () => {
+        // this.map.setZoom(this.map.getZoom()+1)
+        this.defaultCenter = this.map.getCenter();
+        this.defaultZoom = this.map.getZoom();
+        this.map.setZoom(this.defaultZoom + 1);
+      })
+
+    }else if (markers.length == this.brews.length) {
+      console.log("mpike")
+      this.map.setCenter(this.defaultCenter);
+      this.map.setZoom(this.defaultZoom + 1);
+      // google.maps.event.addListenerOnce(this.map, 'idle', () => {
+      //   this.map.setZoom(this.map.getZoom()+1)
+      // })
+    } else {
+      console.log("mpike edw")
+      this.map.fitBounds(bounds);
+    }
+
   }
   fitBoundsCurrent() {
-    let bounds = new google.maps.LatLngBounds(0,0);
+    let markers = [];
     for (let i = 0; i < this.brewsMarkers.length; i++) {
       let marker = this.brewsMarkers[i];
       if (marker.visible) {
-        bounds.extend(marker.getPosition());
+        markers.push(marker);
       }
     }
-
-    this.map.fitBounds(bounds);
+    this.fitBounds(markers);
   }
   registerEvents() {
 

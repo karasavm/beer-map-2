@@ -1,13 +1,17 @@
 <ion-header no-border>
-  <ion-navbar transparent color="dark" no-border>
+  <ion-navbar color="dark" no-border transparent>
     <!--<ion-title text-center>{{brew.name.split("/")[1]}}</ion-title>-->
+
   </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="brew" padding class="main_color">
+<ion-content no-border *ngIf="brew" padding class="main_color"
+             style="_background-color: transparent">
 
+  <br>
+  <br>
+  <ion-card class="modal" class="water_color" >
 
-  <ion-card class="modal" class="water_color">
     <img class="modal-img" [src]="dataSrv.logosPath + brew.icon"/>
     <ion-card-content>
       <ion-card-title text-center="">

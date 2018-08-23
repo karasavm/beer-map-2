@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {LoadingController} from "ionic-angular";
+import {forkJoin} from "rxjs/observable/forkJoin";
 
 @Injectable()
 export class DataService {
@@ -38,22 +39,38 @@ export class DataService {
   }
   fetchData() {
     console.log('fetching data');
+    this.createLoader();
+    this.loading.present();
 
     // this.prefetchPins();
-     return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            this.areas = areas;
-            this.brews = brews;
-            console.log('Data Fetching Complete.');
-            resolve();
-        }, 500);
-    });
+    //  return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         this.areas = areas;
+    //         this.brews = brews;
+    //         console.log('Data Fetching Complete.');
+    //         resolve();
+    //     }, 500);
+    // });
+    // this.areas = areas;
+    this.loading.dismiss();
 
-    // this.http.get('http://138.68.180.1/api/brews')
+    let req1 = this.http.get('https://mikesdevserver.tk/api/brews');
+    let req2 = this.http.get('https://mikesdevserver.tk/api/areas');
+
+    return forkJoin([req1, req2]);
+
+    // this.http.get('https://mikesdevserver.tk/api/brews')
     // .subscribe(brews => {
     //   console.log("Brews Fetched", brews);
     //   this.brews = brews;
+    //
+    //   this.loading.dismiss();
+    //   return new Promise((resolve, reject) => {
+    //     resolve();
+    //   })
     // })
+
+
     //
     // this.http.get('http://138.68.180.1/api/areas')
     // .subscribe(areas => {
