@@ -11,6 +11,7 @@ import {BrewsInfoPage} from "../pages/brews-info/brews-info";
 import {DataService} from "../services/data.service";
 import {HttpClientModule} from "@angular/common/http";
 import {BrewsListPageModule} from "../pages/brews-list/brews-list.module";
+import {IntroPage} from "../pages/intro/intro";
 // import {BrewsInfoPageModule} from "../pages/brews-info/brews-info.module.ts";
 
 @NgModule({

@@ -16,7 +16,6 @@ import {ViewController} from "ionic-angular";
   "name": "brews-info",
   "segment": "brews-info"
 })
-
 @Component({
   selector: 'page-brews-info',
   templateUrl: 'brews-info.html',

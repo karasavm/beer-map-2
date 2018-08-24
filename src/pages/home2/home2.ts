@@ -5,6 +5,7 @@ import {Brew} from "../../helpers/brew.model";
 import {normalizeKey} from "../../helpers/lib";
 import {BeerMapGoogle} from "../../helpers/beer-map-google";
 import {BrewsInfoPage} from "../brews-info/brews-info";
+import {IntroPage} from "../intro/intro";
 
 /**
  * Generated class for the Home2Page page.
@@ -45,6 +46,7 @@ export class Home2Page {
     public navParams: NavParams,
     public dataSrv: DataService,
     public chDetector: ChangeDetectorRef,
+    public modalCtrl: ModalController
     ) {
 
     this.brews = this.dataSrv.getBrews();
@@ -177,6 +179,7 @@ export class Home2Page {
     this.searchKey = '';
     this.onChangeSearchInput();
   }
+
 }
 
 

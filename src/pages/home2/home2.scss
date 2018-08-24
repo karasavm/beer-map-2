@@ -7,13 +7,61 @@ page-home2 {
   //  height: 100%;
   //}
   .main_color {
-    background-image: url('../assets/imgs/texture_04.png');
+    //background-image: url('../assets/imgs/texture_04.png');
 
     //background-color: #eba251;
     //background-color: #fff1e0;
 
-    background-color: #b37b3a;
-    //background-color: transparent;
+    //background-color: #b37b3a;
+    background-color: transparent;
+  }
+
+  .col-style {
+    width: 100px;
+    //max-width: 115px;
+    //max-width: 150px;
+  }
+
+  .badge {
+    position: absolute;
+    right: 20px;
+
+    bottom: 10px;
+    border-radius: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #fa8521;
+  }
+  .card {
+    background-color: transparent;
+    width: 100px;
+
+    //height: 130px;
+  }
+
+  .modal-img {
+    //max-width: 80px;
+    width: 70%;
+    //margin: auto;
+    //padding-top: 2%;
+  }
+
+
+
+
+  .card-content {
+    padding-top: 0;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+    color: white;
+    padding-top: 0
+  }
+  .card-subtitle {
+    font-size: 1.1rem;
+    color: #b8b8b8;
+    padding-top: 0
   }
 }
 
@@ -32,12 +80,15 @@ page-home2 {
 }
 
 
-
 .scroll-content {
   margin-top: 0!important;
   margin-bottom: 0!important;
 }
 
 
+.select-modal {
+  background: rgba(0, 0, 0, 0.77) !important;
+  padding: 20% 10%  !important;
+}
 
 

@@ -24,7 +24,8 @@ ion-spinner * {
 .toolbar-background {
   background-image: url('../assets/imgs/texture_04.png');
 
-  background-color: #ecc080;
+  background-color: #fa8521;
+  //background-color: #eba251 ;
   //background-color: #fcdcac;
 }
 
@@ -33,5 +34,10 @@ ion-spinner * {
   background-image: url('../assets/imgs/texture_04.png');
   //background-color: #eba251;
   //background-color: #fff1e0;
-  background-color: #734b2a;
+  //background-color: #ffaf69;
 }
+
+  .toolbar-title {
+    color: white;
+  }
+
