@@ -32,8 +32,8 @@ export class BeerMapGoogle{
   onLoadMap: any;
   brewsMarkers = [];
   areasMarkers = [];
-  defaultZoom: number;
-  defaultCenter: any;
+  defaultZoom: number = 6;
+  defaultCenter: any = new google.maps.LatLng(GREECE_COORDS.lat, GREECE_COORDS.log);
 
 
 
@@ -118,40 +118,89 @@ export class BeerMapGoogle{
     }
   }
 
-  loadBrewsMarkers() {
-    let l = 15;
+  loadBrewsMarkers(duration) {
+    // let duration = 2000;
+    let vMarkers = [];
+    let size = 40;
 
-    // for (let i=0; i < this.brewsMarkers.length; i++) {
-    //   // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 3000) + 1));
-    //   this.brewsMarkers[i].setMap(this.map);
-    //   this.brewsMarkers[i].setVisible(false);
-    //   this.brewsMarkers[i].setMap(null);
-    //   this.brewsMarkers[i].setVisible(true);
-    //
-    // }
+    for (let i=0; i < 20; i++) {
+      console.log('assets/150x150cp/virtuals/'+ i % 5 +'.png',)
+      let image = {
 
-    for (let i=0; i < l; i++) {
-      // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 2000) + 1));
-      dropMarker(this.map, this.brewsMarkers[i],  Number(1500/l)*(i+1));
-
-      // this.brewsMarkers[i].setMap(this.map);
+        origin: new google.maps.Point(0, 0),
+        url: 'assets/imgs/virtuals/'+ i % 5 +'.png',
+        // url: 'assets/150x150cp/' + this.brews[i].icon.split('.')[0] + '.jpg',
+        scaledSize: new google.maps.Size(size, size), // cap
+        anchor: new google.maps.Point(size/2, size/2), // cap
+      };
+      let marker = new google.maps.Marker({
+        position: new google.maps.LatLng(GREECE_COORDS.lat, GREECE_COORDS.log),
+        // title: legend,
+        animation: google.maps.Animation.DROP,
+        // draggable: false,
+        // shape: shape,
+        // clickable: true,
+        icon: image,
+        // icon: getImageObj('images/pins/60x60/eza.png', MARKER_CAP_SIZE),
+        zIndex: 10
+      });
+      vMarkers.push(marker);
     }
-    setTimeout(() => {
-      for (let i=l; i < this.brewsMarkers.length; i++) {
-        // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 3000) + 1));
-        this.brewsMarkers[i].setMap(this.map);
-        // this.brewsMarkers[i].setAnimation(google.maps.Animation.DROP);
+
+    // load virtuals
+    for (let i=0; i < vMarkers.length;i++) {
+      dropMarker(this.map, vMarkers[i],  Number(duration/vMarkers.length)*(i+1));
+    }
+
+    // let l = 15;
+    setTimeout(()=>{
+      for (let i=0; i < vMarkers.length;i++) {
+       vMarkers[i].setMap(null);
       }
-    }, 2500)
+      for (let i=0; i < this.brewsMarkers.length; i++) {
+        this.brewsMarkers[i].setAnimation(null)
+        this.brewsMarkers[i].setMap(this.map);
+          // dropMarker(this.map, this.brewsMarkers[i],  Number(1000/this.brewsMarkers.length)*(i+1), null);
+      }
+    }, duration);
 
 
+    // for (let i=0; i < l; i++) {
+    //   // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 2000) + 1));
+    //   dropMarker(this.map, this.brewsMarkers[i],  Number(1000/l)*(i+1));
+    //
+    //   // this.brewsMarkers[i].setMap(this.map);
+    // }
+    // setTimeout(()=> {
+    //   for (let i=0; i < l; i++) {
+    //     // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 2000) + 1));
+    //     this.brewsMarkers[i].setMap(null)
+    //     // this.brewsMarkers[i].setMap(this.map);
+    //   }
+    //   for (let i=0; i < l; i++) {
+    //     // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 2000) + 1));
+    //     dropMarker(this.map, this.brewsMarkers[i],  Number(1000/l)*(i+1));
+    //
+    //     // this.brewsMarkers[i].setMap(this.map);
+    //   }
+    // },1000)
+
+    // setTimeout(() => {
+    //   for (let i=l; i < this.brewsMarkers.length; i++) {
+    //     // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 3000) + 1));
+    //     this.brewsMarkers[i].setMap(this.map);
+    //     // this.brewsMarkers[i].setAnimation(google.maps.Animation.DROP);
+    //   }
+    // }, 2500)
+    //
+    //
     let list = [];
-    for (let i=0; i < this.brewsMarkers.length;i++) {
-      setTimeout(() => {
-        list.push(1)
-        this.onMoveMap({contents: list});
-      }, Number(2500/this.brewsMarkers.length)*(i+1));
-    }
+    // for (let i=0; i < this.brewsMarkers.length;i++) {
+    //   setTimeout(() => {
+    //     list.push(1)
+    //     this.onMoveMap({contents: list});
+    //   }, Number(duration/this.brewsMarkers.length)*(i+1));
+    // }
   }
 
   loadAreasMarkers() {
@@ -206,12 +255,12 @@ export class BeerMapGoogle{
 
 
     this.registerEvents();
-    let size = 70;
+    let size = 100;
     let image = {
       origin: new google.maps.Point(0, 0),
       url: 'assets/150x150cp/brews.png',
       // url: 'assets/150x150cp/' + this.brews[i].icon.split('.')[0] + '.jpg',
-      labelOrigin: new google.maps.Point(13,57),
+      labelOrigin: new google.maps.Point(19,82),
       scaledSize: new google.maps.Size(size, size), // cap
       anchor: new google.maps.Point(size/2, size/2), // cap
     };
@@ -221,9 +270,9 @@ export class BeerMapGoogle{
       label: {
         color: 'white',
         fontFamily_: null,
-        fontSize: '19px',
+        fontSize: '25px',
         fontWeight: 'bold',
-        text: this.brews.length.toString()
+        text: '0'
       },
       // title: legend,
       animation: google.maps.Animation.DROP,
@@ -235,38 +284,43 @@ export class BeerMapGoogle{
       zIndex: 100
     });
     let that = this;
+    let duration = 2000;
 
-    setTimeout(function(){
+    setTimeout(() => {
       // that.loadAreasMarkers();
-
       marker.setMap(that.map);
-      setTimeout(function(){
-        that.loadBrewsMarkers();
-        setTimeout(()=> {
-          marker.setMap(null);
-          that.fitBounds(that.brewsMarkers);
-          // google.maps.event.addListenerOnce(that.map, 'idle', ()=>{
-          //   that.map.setZoom(that.map.getZoom()+1)
-          // })
-        },3000)
-      }, 500)
+
+      let counter = 0;
+
+      var interval = setInterval(() => {
+        if (counter + 6 >= this.brews.length) {
+          counter = this.brews.length;
+
+          var label = marker.getLabel();
+          label.text = counter.toString();
+          marker.setLabel(label);
+
+          clearInterval(interval);
+        } else {
+          counter += 6;
+
+          var label = marker.getLabel();
+          label.text = counter.toString();
+          marker.setLabel(label);
+        }
+      }, (duration-500)*6/this.brews.length);
+
+
+      that.loadBrewsMarkers(duration);
+      setTimeout(()=> {
+        marker.setMap(null);
+        that.fitBounds(that.brewsMarkers);
+      },duration + 1000)
 
     }, 500)
 
 
 
-    google.maps.event.addListenerOnce(this.map, 'idle', ()=> {
-      console.log("ffffffffff")
-      setTimeout(function() {
-        // marker.setMap(null);
-        // that.fitBounds(that.brewsMarkers);
-        // that.loadAreasMarkers();
-        setTimeout(function() {
-          // that.hideAreasMarkers();
-          // that.loadBrewsMarkers();
-        }, 1500)
-      }, 1500)
-    })
     // this.loadBrewsMarkers();
     // this.loadAreasMarkers();
     // this.fitBounds(this.brewsMarkers);
@@ -394,11 +448,11 @@ export class BeerMapGoogle{
   fitAreaMarkers() {}
 
   showBrewsFeatures(brews) {}
-
 }
-function dropMarker(map, marker, delay) {
 
-  marker.setAnimation(google.maps.Animation.DROP);
+function dropMarker(map, marker, delay, animation=google.maps.Animation.DROP) {
+
+  marker.setAnimation(animation);
   setTimeout(function() {
     marker.setMap(map);
   }, delay)

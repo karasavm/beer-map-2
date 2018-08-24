@@ -87,6 +87,7 @@ export class MyApp {
     // this.rootPage = 'home'
     // this.navCtrl.setRoot('home')
   }
+
   isActive() {
     return 'primary';
   }
