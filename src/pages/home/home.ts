@@ -27,8 +27,10 @@ export class HomePage {
   search = false;
   contents = [];
   mode = "all"; // all, brews, gypsy
+
   modeLabel = 'ολες';
   mapMode = true;
+
   @ViewChild('map') mapEl: ElementRef;
 
   constructor(
@@ -214,6 +216,8 @@ export class HomePage {
     // this.searchKey = '';
 
     if (this.mode === 'all') {
+
+
       this.mode = 'brews';
       this.modeLabel = "ζυθοποια";
       this.currentBrewsMode = [];
@@ -223,6 +227,8 @@ export class HomePage {
         }
       }
     } else if (this.mode === 'brews') {
+
+
       this.mode = 'gypsy';
       this.modeLabel = "Gypsies";
       this.currentBrewsMode = [];
@@ -233,6 +239,7 @@ export class HomePage {
       }
     } else if (this.mode === 'gypsy') {
       this.mode = 'all';
+
       this.modeLabel = "ολες";
       this.currentBrewsMode = this.brews.slice();
     }

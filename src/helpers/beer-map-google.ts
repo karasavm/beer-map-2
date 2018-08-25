@@ -32,8 +32,10 @@ export class BeerMapGoogle{
   onLoadMap: any;
   brewsMarkers = [];
   areasMarkers = [];
-  defaultZoom: number = 6;
-  defaultCenter: any = new google.maps.LatLng(GREECE_COORDS.lat, GREECE_COORDS.log);
+  defaultZoom: number;
+  // defaultZoom: number = 6;
+  // defaultCenter: any = new google.maps.LatLng(GREECE_COORDS.lat, GREECE_COORDS.log);
+  defaultCenter: any;
 
 
 

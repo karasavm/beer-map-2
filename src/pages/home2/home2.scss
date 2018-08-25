@@ -1,6 +1,17 @@
 
 page-home2 {
 
+  .toolbar-background {
+    background-image: none;
+
+    background-color: rgba(250, 133, 33, 0.52);
+
+
+
+    //background-color: #eba251 ;
+    //background-color: #fcdcac;
+  }
+
 
   //#map {
   //  width: 100%;
@@ -91,4 +102,23 @@ page-home2 {
   padding: 20% 10%  !important;
 }
 
+.fab {
+  background-color: transparent;
+  width:  70px;
+  height: 70px;
+  -webkit-box-shadow: none;
+}
 
+.fab-item {
+  height: 60px!important;
+  width: 60px!important;
+  /* margin-bottom: 0px; */
+  /* margin-right: 0px; */
+  margin-left: -5px!important;
+  margin-top: 5px!important;
+
+  background-color: transparent;
+  //width:  80px;
+  //height: 80px;
+  //-webkit-box-shadow: none;
+}

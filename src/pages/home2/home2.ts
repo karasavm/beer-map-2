@@ -4,8 +4,6 @@ import {DataService} from "../../services/data.service";
 import {Brew} from "../../helpers/brew.model";
 import {normalizeKey} from "../../helpers/lib";
 import {BeerMapGoogle} from "../../helpers/beer-map-google";
-import {BrewsInfoPage} from "../brews-info/brews-info";
-import {IntroPage} from "../intro/intro";
 
 /**
  * Generated class for the Home2Page page.
@@ -31,7 +29,9 @@ export class Home2Page {
   @ViewChild('searchbar') searchbar:Searchbar;
 
   searchKey = '';
-
+  brewMode = 'all'; // all, brews, gypsy
+  fab1 = 'brews';
+  fab2 = 'gypsy';
   brews: Brew[];
   areas: any;
   mapMode = true;
@@ -40,6 +40,11 @@ export class Home2Page {
   contents: Brew[] = [];
   showSearch = true;
   beerMap: any;
+  brewTitle =  {
+    'brews': 'ΜΙΚΡΟΖΥΘΟΠΟΙΙΕΣ',
+    'all': 'ΖΥΘΟΠΟΙΙΕΣ',
+    'gypsy': 'GYPSY'
+  };
 
   constructor(
     public navCtrl: NavController,
@@ -180,6 +185,47 @@ export class Home2Page {
     this.onChangeSearchInput();
   }
 
+  onClickBrewMode(mode, fab) {
+    console.log(mode)
+    fab.close();
+    // return;
+    // clear search funcitonality
+    // this.searchKey = '';
+
+    if (mode === 'brews') {
+      this.fab1 = 'all';
+      this.fab2 = 'gypsy';
+      this.brewMode= 'brews';
+      // this.modeLabel = "ζυθοποια";
+      this.currentBrewsMode = [];
+      for (let i=0; i < this.brews.length; i++) {
+        if (this.brews[i].type !== 'client') {
+          this.currentBrewsMode.push(this.brews[i]);
+        }
+      }
+    } else if (mode === 'gypsy') {
+      this.fab1 = 'brews';
+      this.fab2 = 'all';
+      this.brewMode= 'gypsy';
+      // this.modeLabel = "Gypsies";
+      this.currentBrewsMode = [];
+      for (let i=0; i < this.brews.length; i++) {
+        if (this.brews[i].type === 'client') {
+          this.currentBrewsMode.push(this.brews[i]);
+        }
+      }
+    } else if (mode === 'all') {
+      this.brewMode= 'all';
+      this.fab1 = 'brews';
+      this.fab2 = 'gypsy';
+      // this.modeLabel = "ολες";
+      this.currentBrewsMode = this.brews.slice();
+    }
+
+    this.currentBrews = this.currentBrewsMode.slice();
+    this.onChangeSearchInput()
+
+  }
 }
 
 

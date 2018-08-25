@@ -9,7 +9,9 @@
 <!--eba251 land-->
 <ion-header no-border>
 
-  <ion-navbar class="test" transparent [color]="{true: 'dark', false: 'dark'}[mapMode]" *ngIf="true">
+  <ion-navbar
+
+               *ngIf="true">
       <ion-toolbar>
         <!--<ion-title>{// contents.length}} Ζυθοποιίες</ion-title>-->
         <ion-buttons left *ngIf="!showSearch">
@@ -19,7 +21,12 @@
         </ion-buttons>
         <!--</ion-toolbar>-->
         <ion-title text-center *ngIf="!showSearch">
-          {{contents.length}} ΖΥΘΟΠΟΙΙΕΣ
+
+
+          {{contents.length}} {{brewTitle[brewMode]}}
+          <!--<button ion-button color="switcher">-->
+            <!--{{contents.length}} {{brewTitle[brewMode]}}-->
+          <!--</button>-->
         </ion-title>
         <!--<ion-toolbar *ngIf = 'true'>-->
         <ion-searchbar
@@ -45,7 +52,7 @@
 
   <ion-navbar *ngIf="showSearch" transparent color="dark" style="min-height: auto!important;">
     <ion-title text-center style="background-color: #8080809e">
-      {{contents.length}} ΖΥΘΟΠΟΙΙΕΣ
+      {{contents.length}} {{brewTitle[brewMode]}}
     </ion-title>
   </ion-navbar>
   <!--603e21-->
@@ -173,7 +180,18 @@
     <!--width: 100%;-->
     <!--">-->
     </div>
-
+  <ion-fab middle right #fab>
+    <img class ="fab" ion-fab [src]="'assets/imgs/fabs/' + brewMode + '.png'" alt="">
+    <!--<button ion-fab style="background-image_: url('assets/imgs/150x150cp/0.png')">Share</button>-->
+    <ion-fab-list side="left" style="width:200px">
+      <img class="fab-item" ion-fab
+           [src]="'assets/imgs/fabs/' + fab1 +'.png'" (click)="onClickBrewMode(fab1, fab)">
+      <img class="fab-item" ion-fab [src]="'assets/imgs/fabs/' + fab2 +'.png'" (click)="onClickBrewMode(fab2, fab)">
+      <!--<img class="fab-item" ion-fab src="assets/imgs/fabs/1.png">-->
+      <!--<button ion-fab>Facebook</button>-->
+      <!--<button ion-fab>Twitter</button>-->
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
 
 <ion-footer no-border>
