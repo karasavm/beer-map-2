@@ -192,6 +192,10 @@
       <!--<button ion-fab>Twitter</button>-->
     </ion-fab-list>
   </ion-fab>
+
+  <img  (load)="imgLoaded()"
+    [src]="dataSrv.logosPath + selectedBrew.icon"
+    *ngIf="selectedBrew" style="display: none">
 </ion-content>
 
 <ion-footer no-border>
@@ -208,7 +212,7 @@
       </button>
 
     </ion-buttons>
-
-
   </ion-toolbar>
 </ion-footer>
+
+

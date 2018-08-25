@@ -40,6 +40,7 @@ export class Home2Page {
   contents: Brew[] = [];
   showSearch = true;
   beerMap: any;
+  selectedBrew;
   brewTitle =  {
     'brews': 'ΜΙΚΡΟΖΥΘΟΠΟΙΙΕΣ',
     'all': 'ΖΥΘΟΠΟΙΙΕΣ',
@@ -79,7 +80,9 @@ export class Home2Page {
       this.mapElement.nativeElement,
       (brew) => {
         console.log("brew marker clicked!!");
-        this.navCtrl.push('brews-info', {brew: brew});
+        this.selectedBrew = brew;
+        // this.navCtrl.push('brews-info', {brew: brew});
+
 
       },
       (data) => {
@@ -157,8 +160,8 @@ export class Home2Page {
   }
 
   onClickBrewItem(brew) {
-
-    this.navCtrl.push('brews-info', {brew: brew});
+    this.selectedBrew = brew;
+    // this.navCtrl.push('brews-info', {brew: brew});
   }
 
   isActive(s) {
@@ -225,6 +228,12 @@ export class Home2Page {
     this.currentBrews = this.currentBrewsMode.slice();
     this.onChangeSearchInput()
 
+
+  }
+
+  imgLoaded() {
+    console.log("fffffffffffffffffff");
+    this.navCtrl.push('brews-info', {brew: this.selectedBrew});
   }
 }
 
