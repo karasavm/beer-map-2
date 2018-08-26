@@ -1,6 +1,10 @@
 
 page-home2 {
 
+  .scroll-content {
+    overflow-y: hidden;
+  }
+
   .toolbar-background {
     background-image: none;
 
@@ -38,8 +42,10 @@ page-home2 {
     border-radius: 10px;
     padding-left: 6px;
     padding-right: 6px;
-    background-color: #fa8521;
+    //background-color: #fa8521;
   }
+
+
   .card {
     background-color: transparent;
     width: 100px;
@@ -100,7 +106,8 @@ page-home2 {
 }
 
 .fab {
-  background-color: transparent;
+  //background-color: transparent;
+  background-color: white;
   width:  70px;
   height: 70px;
   -webkit-box-shadow: none;
@@ -114,8 +121,60 @@ page-home2 {
   margin-left: -5px!important;
   margin-top: 5px!important;
 
-  background-color: transparent;
+  //background-color: transparent;
+  background-color: white;
+
   //width:  80px;
   //height: 80px;
   //-webkit-box-shadow: none;
+}
+
+
+
+.customMarker {
+  position: absolute;
+  cursor: pointer;
+  background: transparent;
+  width: 65px;
+  height: 67px;
+  margin-left: -33px;
+  margin-top: -62px;
+  border-radius: 50%;
+  padding: 0px;
+}
+
+
+.customMarker:after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 22px;
+  border-width: 10px 10px 0;
+  border-style: solid;
+  border-color: #603e21 transparent;
+  display: block;
+  width: 0;
+}
+
+
+.customMarker img {
+  width: 55px;
+  height: 55px;
+  margin: 5px;
+  border-radius: 50%;
+  margin-top: 0px;
+}
+.pin-badge {
+  position: relative;
+  display: inline-block;
+  min-width: 15px;
+
+  color: white;
+  padding: 2px;
+  padding-left: 3px;
+  font-size: 13px;
+  //background-color: #fa8521;
+  border-radius: 10px;
+  bottom: 45px;
+  right: -38px;
 }

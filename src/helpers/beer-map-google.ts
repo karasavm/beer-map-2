@@ -31,6 +31,7 @@ export class BeerMapGoogle{
   imgsPath: string;
   onLoadMap: any;
   brewsMarkers = [];
+  brewsMarkers2 = [];
   areasMarkers = [];
   defaultZoom: number;
   // defaultZoom: number = 6;
@@ -53,10 +54,10 @@ export class BeerMapGoogle{
   createBrewsMarkers() {
     for (let i=0; i < this.brews.length; i++) {
 
-      let sp = this.brews[i].mapUrl.split("!3d");
-      sp = sp[sp.length-1];
-      let lat = Number(sp.split("!4d")[0]);
-      let log = Number(sp.split("!4d")[1]);
+      let sp = mapUrlTolatlog(this.brews[i].mapUrl);
+      let lat = sp[0];
+      let log = sp[1];
+
       // console.log(lat, log);
 
       let image = {
@@ -65,7 +66,7 @@ export class BeerMapGoogle{
         // url: 'assets/150x150cp/' + this.brews[i].icon.split('.')[0] + '.jpg',
         labelOrigin: new google.maps.Point(40,40),
         // scaledSize: new google.maps.Size(60, 88), // short pin
-        scaledSize: new google.maps.Size(40, 40), // cap
+        scaledSize: new google.maps.Size(40,40), // cap
         // anchor: new google.maps.Point(31, 88), // short pin
         anchor: new google.maps.Point(20, 20), // cap
       };
@@ -126,7 +127,6 @@ export class BeerMapGoogle{
     let size = 40;
 
     for (let i=0; i < 20; i++) {
-      console.log('assets/150x150cp/virtuals/'+ i % 5 +'.png',)
       let image = {
 
         origin: new google.maps.Point(0, 0),
@@ -159,50 +159,14 @@ export class BeerMapGoogle{
       for (let i=0; i < vMarkers.length;i++) {
        vMarkers[i].setMap(null);
       }
-      for (let i=0; i < this.brewsMarkers.length; i++) {
-        this.brewsMarkers[i].setAnimation(null)
-        this.brewsMarkers[i].setMap(this.map);
-          // dropMarker(this.map, this.brewsMarkers[i],  Number(1000/this.brewsMarkers.length)*(i+1), null);
-      }
+      // for (let i=0; i < this.brewsMarkers.length; i++) {
+      //   this.brewsMarkers[i].setAnimation(null)
+      //   this.brewsMarkers[i].setMap(this.map);
+      //     // dropMarker(this.map, this.brewsMarkers[i],  Number(1000/this.brewsMarkers.length)*(i+1), null);
+      // }
     }, duration);
 
 
-    // for (let i=0; i < l; i++) {
-    //   // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 2000) + 1));
-    //   dropMarker(this.map, this.brewsMarkers[i],  Number(1000/l)*(i+1));
-    //
-    //   // this.brewsMarkers[i].setMap(this.map);
-    // }
-    // setTimeout(()=> {
-    //   for (let i=0; i < l; i++) {
-    //     // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 2000) + 1));
-    //     this.brewsMarkers[i].setMap(null)
-    //     // this.brewsMarkers[i].setMap(this.map);
-    //   }
-    //   for (let i=0; i < l; i++) {
-    //     // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 2000) + 1));
-    //     dropMarker(this.map, this.brewsMarkers[i],  Number(1000/l)*(i+1));
-    //
-    //     // this.brewsMarkers[i].setMap(this.map);
-    //   }
-    // },1000)
-
-    // setTimeout(() => {
-    //   for (let i=l; i < this.brewsMarkers.length; i++) {
-    //     // dropMarker(this.map, this.brewsMarkers[i],  Math.floor((Math.random() * 3000) + 1));
-    //     this.brewsMarkers[i].setMap(this.map);
-    //     // this.brewsMarkers[i].setAnimation(google.maps.Animation.DROP);
-    //   }
-    // }, 2500)
-    //
-    //
-    let list = [];
-    // for (let i=0; i < this.brewsMarkers.length;i++) {
-    //   setTimeout(() => {
-    //     list.push(1)
-    //     this.onMoveMap({contents: list});
-    //   }, Number(duration/this.brewsMarkers.length)*(i+1));
-    // }
   }
 
   loadAreasMarkers() {
@@ -217,6 +181,7 @@ export class BeerMapGoogle{
   }
 
   init() {
+    this.onMoveMap({contents: this.brews})
     console.log("init");
     this.createBrewsMarkers();
     this.createAreasMarkers();
@@ -253,10 +218,10 @@ export class BeerMapGoogle{
       opacity: 0.45
     });
 
-    // this.map.overlayMapTypes.push(textureLayer);
+    this.map.overlayMapTypes.push(textureLayer);
 
 
-    this.registerEvents();
+
     let size = 100;
     let image = {
       origin: new google.maps.Point(0, 0),
@@ -288,39 +253,156 @@ export class BeerMapGoogle{
     let that = this;
     let duration = 2000;
 
+    // timer for countdown
     setTimeout(() => {
-      // that.loadAreasMarkers();
       marker.setMap(that.map);
 
-      let counter = 0;
 
-      var interval = setInterval(() => {
-        if (counter + 6 >= this.brews.length) {
-          counter = this.brews.length;
-
-          var label = marker.getLabel();
-          label.text = counter.toString();
+      // let counter = 0;
+      //
+      // var interval = setInterval(() => {
+      //   if (counter + 6 >= this.brews.length) {
+      //     counter = this.brews.length;
+      //
+      //     var label = marker.getLabel();
+      //     label.text = counter.toString();
+      //     marker.setLabel(label);
+      //
+      //     clearInterval(interval);
+      //   } else {
+      //     counter += 6;
+      //
+      //     var label = marker.getLabel();
+      //     label.text = counter.toString();
+      //     marker.setLabel(label);
+      //   }
+      // }, (duration-500)*6/this.brews.length);
+      //
+      //
+      // that.loadBrewsMarkers(duration);
+      // setTimeout(()=> {
+      //   marker.setMap(null);
+      //   // that.fitBounds(that.brewsMarkers2);
+      // },duration + 1000)
+      var label = marker.getLabel();
+          label.text = this.brews.length.toString();
           marker.setLabel(label);
-
-          clearInterval(interval);
-        } else {
-          counter += 6;
-
-          var label = marker.getLabel();
-          label.text = counter.toString();
-          marker.setLabel(label);
-        }
-      }, (duration-500)*6/this.brews.length);
-
-
-      that.loadBrewsMarkers(duration);
-      setTimeout(()=> {
-        marker.setMap(null);
-        that.fitBounds(that.brewsMarkers);
-      },duration + 1000)
-
     }, 500)
 
+    setTimeout(() => {
+      marker.setMap(null)
+      function CustomMarker(latlng, map, imageSrc, beers, type) {
+        this.latlng_ = latlng;
+        this.imageSrc = imageSrc;
+        this.beers = beers;
+        this.type = type;
+        // Once the LatLng and text are set, add the overlay to the map.  This will
+        // trigger a call to panes_changed which should in turn call draw.
+        this.setMap(map);
+      }
+
+      CustomMarker.prototype = new google.maps.OverlayView();
+
+      CustomMarker.prototype.draw = function() {
+        // Check if the div has been created.
+        var div = this.div_;
+        if (!div) {
+          // Create a overlay text DIV
+          div = this.div_ = document.createElement('div');
+          // Create the DIV representing our CustomMarker
+          div.className = "customMarker";
+
+
+          var img = document.createElement("img");
+          img.src = this.imageSrc;
+          div.appendChild(img);
+
+          // my code
+          let p = document.createElement('p');
+          p.innerText = this.beers.toString();
+          p.className = "pin-badge";
+          if (this.type === 'client') {
+            p.style.backgroundColor = '#488aff';
+          } else {
+            p.style.backgroundColor = '#fa8521';
+          }
+
+          div.appendChild(p);
+
+          var me = this;
+          google.maps.event.addDomListener(div, "click", function(event) {
+            google.maps.event.trigger(me, "click");
+          });
+
+          // Then add the overlay to the DOM
+          var panes = this.getPanes();
+          panes.overlayImage.appendChild(div);
+        }
+
+        // Position the overlay
+        var point = this.getProjection().fromLatLngToDivPixel(this.latlng_);
+        if (point) {
+          div.style.left = point.x + 'px';
+          div.style.top = point.y + 'px';
+        }
+      };
+
+      CustomMarker.prototype.remove = function() {
+        // Check if the overlay was on the map and needs to be removed.
+        if (this.div_) {
+          this.div_.parentNode.removeChild(this.div_);
+          this.div_ = null;
+        }
+      };
+
+      CustomMarker.prototype.getPosition = function() {
+        return this.latlng_;
+      };
+      CustomMarker.prototype.setVisible = function(show) {
+        if (show) {
+          this.div_.style.display = 'block'
+        } else {
+          this.div_.style.display = 'none';
+        }
+      };
+      CustomMarker.prototype.isVisible = function() {
+        if (this.div_.style.display === 'none') {
+          return false;
+        } else {
+          return true;
+        }
+      };
+
+      for (let i = 0; i < this.brews.length; i++) {
+        let lat = mapUrlTolatlog(this.brews[i].mapUrl)[0];
+        let log = mapUrlTolatlog(this.brews[i].mapUrl)[1];
+        let marker = new CustomMarker(
+          new google.maps.LatLng(lat, log),
+          this.map,
+          this.pinsPath + this.brews[i].icon,
+          this.brews[i].beers,
+          this.brews[i].type
+        )
+        marker.brew = this.brews[i];
+        this.brewsMarkers2.push(marker);
+
+        // let marker = new google.maps.Marker({
+        //   position: new google.maps.LatLng(lat, log),
+        // });
+        // marker.setMap(this.map);
+
+
+      }
+      this.registerEvents();
+      setTimeout(()=> {
+        this.fitBounds(that.brewsMarkers2);
+      }, 300)
+
+    }, duration + 1500)
+
+
+
+    // this.map.setZoom(7)
 
 
     // this.loadBrewsMarkers();
@@ -362,9 +444,9 @@ export class BeerMapGoogle{
   }
   fitBoundsCurrent() {
     let markers = [];
-    for (let i = 0; i < this.brewsMarkers.length; i++) {
-      let marker = this.brewsMarkers[i];
-      if (marker.visible) {
+    for (let i = 0; i < this.brewsMarkers2.length; i++) {
+      let marker = this.brewsMarkers2[i];
+      if (marker.isVisible()) {
         markers.push(marker);
       }
     }
@@ -389,16 +471,38 @@ export class BeerMapGoogle{
       if (this.map.boundsChanged) {
         console.log("idle:bounds_changed");
         this.onMoveMap({
-          contents: this.findContents(this.brewsMarkers)
+          contents: this.findContents(this.brewsMarkers2)
         });
         this.map.boundsChanged = false;
       }
     });
 
+    this.map.addListener('zoom_changed', () => {
+      return;
+      // let zoom = this.map.getZoom();
+      // let size;
+      //
+      // let step = 5;
+      // if (zoom - 6 > 0 ) {
+      //   size = (zoom - 6)*step + 40;
+      // } else {
+      //   size = 40;
+      // }
+      //
+      // console.log(size)
+      // for(let i=0; i < this.brewsMarkers.length; i++) {
+      //   let icon = this.brewsMarkers[i].getIcon();
+      //   icon.scaledSize = new google.maps.Size(size, size);
+      //   icon.anchor = new google.maps.Point(size/2, size/2);
+      //   this.brewsMarkers[i].setIcon(icon)
+      //
+      // }
+    });
+
     let that = this;
     // BREWS MARKERS
-    for (let i=0; i < this.brewsMarkers.length; i++) {
-      this.brewsMarkers[i].addListener('click', function () {
+    for (let i=0; i < this.brewsMarkers2.length; i++) {
+      this.brewsMarkers2[i].addListener('click', function () {
         console.log("Marker Clicked -- ", this.brew.name)
         that.onClickBrewsMarker(this.brew);
       })
@@ -410,7 +514,7 @@ export class BeerMapGoogle{
   findContents(markers) {
     let contents = [];
     for (let i=0; i < markers.length; i++) {
-      if (markers[i].visible &&
+      if (markers[i].isVisible() &&
         this.map.getBounds().contains(markers[i].getPosition())){
         contents.push(markers[i].brew);
       }
@@ -419,10 +523,11 @@ export class BeerMapGoogle{
   }
 
   showBrewsMarkers(brews, fit=true) {
+
     let markers = [];
-    for (let i=0; i < this.brewsMarkers.length; i++) {
+    for (let i=0; i < this.brewsMarkers2.length; i++) {
       let found = false;
-      let marker = this.brewsMarkers[i];
+      let marker = this.brewsMarkers2[i];
       for (let j=0; j < brews.length; j++) {
         if (marker.brew.id === brews[j].id) {
           found = true;
@@ -433,9 +538,10 @@ export class BeerMapGoogle{
       marker.setVisible(found);
     }
 
+    console.log("kkk", markers, brews);
+
     this.fitBounds(markers);
 
-    // this.onMoveMap({contents: this.findContents(markers)});
     this.onMoveMap({contents: brews});
 
   }
@@ -460,6 +566,13 @@ function dropMarker(map, marker, delay, animation=google.maps.Animation.DROP) {
   }, delay)
 }
 
+function mapUrlTolatlog(url) {
+  let sp = url.split("!3d");
+  sp = sp[sp.length-1];
+  let lat = Number(sp.split("!4d")[0]);
+  let log = Number(sp.split("!4d")[1]);
+  return [lat, log]
+}
 const map_style = [
   {
     "featureType": "all",

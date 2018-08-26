@@ -41,11 +41,8 @@ export class Home2Page {
   showSearch = true;
   beerMap: any;
   selectedBrew;
-  brewTitle =  {
-    'brews': 'ΜΙΚΡΟΖΥΘΟΠΟΙΙΕΣ',
-    'all': 'ΖΥΘΟΠΟΙΙΕΣ',
-    'gypsy': 'GYPSY'
-  };
+
+  brewTitle;
 
   constructor(
     public navCtrl: NavController,
@@ -54,6 +51,12 @@ export class Home2Page {
     public chDetector: ChangeDetectorRef,
     public modalCtrl: ModalController
     ) {
+
+    this.brewTitle =  {
+      'brews': 'ΜΙΚΡΟΖΥΘΟΠΟΙΙΕΣ',
+      'all': 'ΖΥΘΟΠΟΙΙΕΣ',
+      'gypsy': 'GYPSY'
+    };
 
     this.brews = this.dataSrv.getBrews();
     this.areas = this.dataSrv.getAreas();
@@ -116,7 +119,7 @@ export class Home2Page {
 
 
   onChangeSearchInput() {
-    console.log(this.searchKey);
+    console.log("searchKey: ", this.searchKey);
 
     let list = [];
     const key = normalizeKey(this.searchKey);
@@ -131,7 +134,7 @@ export class Home2Page {
     // console.log(list)
     this.currentBrews = list.slice();
 
-    // console.log(this.currentBrews);
+    console.log(this.currentBrews);
     // this.update();
     this.beerMap.showBrewsMarkers(this.currentBrews)
 
@@ -189,7 +192,6 @@ export class Home2Page {
   }
 
   onClickBrewMode(mode, fab) {
-    console.log(mode)
     fab.close();
     // return;
     // clear search funcitonality
@@ -232,7 +234,6 @@ export class Home2Page {
   }
 
   imgLoaded() {
-    console.log("fffffffffffffffffff");
     this.navCtrl.push('brews-info', {brew: this.selectedBrew});
   }
 }

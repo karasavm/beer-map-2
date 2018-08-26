@@ -51,6 +51,7 @@
   </ion-navbar>
 
   <ion-navbar *ngIf="showSearch" transparent color="dark" style="min-height: auto!important;">
+
     <ion-title text-center style="background-color: #8080809e">
       {{contents.length}} {{brewTitle[brewMode]}}
     </ion-title>
@@ -62,19 +63,21 @@
 </ion-header>
 
 
-<ion-content (click)="focusOut()" (touchstart)="focusOut()" >
+<ion-content (click)="focusOut()" (touchstart)="focusOut()" style="overflow-y: hidden;">
 
   <div id="wrapper"
        style="position: relative; height: 100%; pointer-events:auto">
 
     <!--MAP-->
     <div #map id="map"
-    style="height: 100%;background-color: #eba251;width:100%;position: relative;"></div>
+    style="height: 100%;
+    background-image: url('assets/imgs/texture_04.png');
+    background-color: #eba251;width:100%;position: relative;"></div>
 
 
     <div id="over_map" style="
     position: absolute; top: 0px; left: 0px; z-index: 99;
-    background-image: url('assets/imgs/texture_04.png');
+    /*background-image: url('assets/imgs/texture_04.png');*/
 
     /*opacity: 0.35;*/
     pointer-events:none;
@@ -130,7 +133,9 @@
               >
                 <div text-center class="card" >
                     <div style="position: relative">
-                      <ion-badge class="badge">{{brew.beers | number}}</ion-badge>
+                      <ion-badge class="badge"
+                                 [color]="{true: 'switcher'}[brew.type !== 'client']"
+                      >{{brew.beers | number}}</ion-badge>
                       <img [src]="dataSrv.pinsPath + brew.icon" class="modal-img">
                     </div>
 
