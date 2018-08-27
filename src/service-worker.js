@@ -35,3 +35,4 @@ self.toolbox.router.get(/^https:\/\/mikesdevserver.tk\/api\/images\//, self.tool
 // and then only use that cached resource if your user goes offline
 // self.toolbox.router.default = self.toolbox.networkFirst;
 // self.toolbox.router.default = self.toolbox.cacheFirst;
+
