@@ -1,3 +1,5 @@
+
+
 <ion-header no-border>
   <ion-navbar color="dark" no-border transparent>
     <!--<ion-title text-center>{{brew.name.split("/")[1]}}</ion-title>-->
@@ -10,7 +12,7 @@
 
   <br>
   <br>
-  <ion-card class="modal" class="water_color" >
+  <ion-card class="modal" >
 
     <img class="modal-img" [src]="dataSrv.logosPath + brew.icon"/>
     <ion-card-content>
@@ -41,9 +43,12 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card class="modal" class="water_color">
+  <ion-card class="modal">
     <ion-card-header text-center>
-      Μπύρες Coming Soon
+      {{brew.beers}} Μπύρες
+      <br>
+      <!--<br>-->
+      <i style="font-size: 13px">More Details Coming Soon</i>
     </ion-card-header>
 
     <ion-list>

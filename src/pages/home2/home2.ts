@@ -235,6 +235,7 @@ export class Home2Page {
 
   imgLoaded() {
     this.navCtrl.push('brews-info', {brew: this.selectedBrew});
+    this.selectedBrew = null;
   }
 }
 

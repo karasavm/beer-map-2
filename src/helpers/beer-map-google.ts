@@ -332,6 +332,7 @@ export class BeerMapGoogle{
           var me = this;
           google.maps.event.addDomListener(div, "click", function(event) {
             google.maps.event.trigger(me, "click");
+            console.log("mpike")
           });
 
           // Then add the overlay to the DOM
@@ -503,7 +504,7 @@ export class BeerMapGoogle{
     // BREWS MARKERS
     for (let i=0; i < this.brewsMarkers2.length; i++) {
       this.brewsMarkers2[i].addListener('click', function () {
-        console.log("Marker Clicked -- ", this.brew.name)
+        console.log("Marker Clicked -- ", this.brew.name);
         that.onClickBrewsMarker(this.brew);
       })
     }

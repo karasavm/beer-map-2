@@ -14,7 +14,8 @@ import {ViewController} from "ionic-angular";
 
 @IonicPage({
   "name": "brews-info",
-  "segment": "brews-info"
+  "segment": "brews-info",
+  "defaultHistory": ['home2']
 })
 @Component({
   selector: 'page-brews-info',
