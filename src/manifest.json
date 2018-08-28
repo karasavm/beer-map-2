@@ -1,13 +1,17 @@
 {
-  "name": "Beer Map",
-  "short_name": "Ionic",
-  "start_url": "index.html",
+  "name": "Beer Map of GREECE",
+  "short_name": "Greek Beer",
+  "start_url": "index.html#/home2",
   "display": "standalone",
   "icons": [{
-    "src": "assets/imgs/logo.png",
+    "src": "assets/imgs/icon512.png",
     "sizes": "512x512",
     "type": "image/png"
+  }, {
+    "src": "assets/imgs/icon128.png",
+    "sizes": "128x128",
+    "type": "image/png"
   }],
-  "background_color": "#4e8ef7",
-  "theme_color": "#4e8ef7"
+  "background_color": "#fa8521",
+  "theme_color": "#fa8521"
 }

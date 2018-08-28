@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams, Searchbar} from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams, Platform, Searchbar} from 'ionic-angular';
 import {DataService} from "../../services/data.service";
 import {Brew} from "../../helpers/brew.model";
 import {normalizeKey} from "../../helpers/lib";
@@ -17,7 +17,8 @@ import {BeerMapGoogle} from "../../helpers/beer-map-google";
 
 @IonicPage({
   "name": "home2",
-  "segment": "home2"
+  "segment": "home2",
+  "defaultHistory": ['']
 })
 @Component({
   selector: 'page-home2',
@@ -49,8 +50,10 @@ export class Home2Page {
     public navParams: NavParams,
     public dataSrv: DataService,
     public chDetector: ChangeDetectorRef,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    public platform: Platform
     ) {
+
 
     this.brewTitle =  {
       'brews': 'ΜΙΚΡΟΖΥΘΟΠΟΙΙΕΣ',
@@ -69,6 +72,19 @@ export class Home2Page {
   }
 
   ionViewDidLoad(){
+
+    let sp = window.location.href.toString().split('/');
+
+
+
+
+    if (sp[sp.length -1] !== 'home2' && this.dataSrv.loaded) {
+      history.back();
+      console.log("backkkkk");
+      // this.dataSrv.platform.exitApp();
+      // window.close()
+      // this.platform.exitApp();
+    }
 
     this.showSearch = false;
     console.log("view did load home2")
@@ -112,6 +128,7 @@ export class Home2Page {
 
     // this.dataSrv.loading.present();
     // let that = this;
+    this.dataSrv.loaded = true;
 
   }
 

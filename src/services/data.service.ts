@@ -79,6 +79,7 @@ export class DataService {
     // })
 
   }
+  loaded = false;
   getBrews() { return this.brews }
   getAreas() { return this.areas }
   getBrewById(id) {

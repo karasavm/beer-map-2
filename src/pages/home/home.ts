@@ -9,7 +9,8 @@ import {normalizeKey} from "../../helpers/lib";
 
 @IonicPage({
   "name": "home",
-  "segment": "home"
+  "segment": "home",
+
 })
 @Component({
   selector: 'page-home',

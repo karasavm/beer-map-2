@@ -22,7 +22,7 @@ export class MyApp {
     private loadingCtrl: LoadingController,
     // private navCtrl: NavController,
   private alertCtrl: AlertController,
-    private _app: App, private _ionicApp: IonicApp, private _menu: MenuController
+    private app: App, private _ionicApp: IonicApp, private _menu: MenuController
     ) {
 
 
@@ -58,6 +58,22 @@ export class MyApp {
 
       };
 
+    });
+
+    platform.registerBackButtonAction(() => {
+      const overlayView = this.app._appRoot._overlayPortal._views[0];
+      if(overlayView && overlayView.dismiss) {
+        // overlayView.dismiss();
+      } else {
+        let nav = this.app.getActiveNav();
+        if(nav.canGoBack()){
+          // nav.pop();
+        } else {
+          console.log("CANT GO BACK")
+          platform.exitApp();
+        }
+      }
+      // this.lastBack = Date.now();
     });
 
     // this.dataSrv.createLoader();
