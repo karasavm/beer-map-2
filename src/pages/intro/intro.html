@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>intro</ion-title>
+    <ion-title text-center>RATE YOUR BEER</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,6 +19,86 @@
 
 
 
-<ion-content>
-  <div>tettts</div>
+<ion-content padding>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div *ngIf="!beer">
+    <zxing-scanner
+      [class]="{true: 'hide-cam'}[!scannerEnabled]"
+
+      [scannerEnabled]="scannerEnabled"
+      [autofocusEnabled]="true"
+      [device]="desiredDevice"
+      (camerasFound)="camerasFoundHandler($event)"
+
+      (scanSuccess)="scanSuccessHandler($event)"
+      (scanError)="scanErrorHandler($event)"
+      (scanFailure)="scanFailureHandler($event)"
+      (scanComplete)="scanCompleteHandler($event)"
+    ></zxing-scanner>
+    <button ion-button class="scan-btn" color="secondary" block (click)="onClickScan()" *ngIf="!scannerEnabled">SCAN</button>
+    <button ion-button color="danger" block (click)="onClickCancelScan()" *ngIf="scannerEnabled">cancel</button>
+
+
+  </div>
+
+  <div *ngIf="beer">
+    <ion-list no-lines >
+
+      <!--RATING-->
+      <ion-item-divider color="light" text-center style="font-size: 60px">
+        Sknipa Bold
+      </ion-item-divider>
+
+      <ion-list-header text-center class="headers">
+        Βαθμολογία
+      </ion-list-header>
+      <!--<ion-item-divider color="light">A</ion-item-divider>-->
+      <ion-item text-center>
+
+        <ion-icon class="start" [name]="getIcon(0)" (click)="onClickStar(0)" [color]="{true: 'switcher'}[votes[0]==1]"></ion-icon>
+        <ion-icon class="start" [name]="getIcon(1)" (click)="onClickStar(1)" [color]="{true: 'switcher'}[votes[1]==1]"></ion-icon>
+        <ion-icon class="start" [name]="getIcon(2)" (click)="onClickStar(2)" [color]="{true: 'switcher'}[votes[2]==1]"></ion-icon>
+        <ion-icon class="start" [name]="getIcon(3)" (click)="onClickStar(3)" [color]="{true: 'switcher'}[votes[3]==1]"></ion-icon>
+        <ion-icon class="start" [name]="getIcon(4)" (click)="onClickStar(4)" [color]="{true: 'switcher'}[votes[4]==1]"></ion-icon>
+
+      </ion-item>
+
+      <!--TASTE-->
+      <ion-list-header text-center class="headers">
+        Την έχεις ξανά δοκιμάσει;
+      </ion-list-header>
+      <ion-item text-center>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-icon class="thumb" name="thumbs-down" [color]="{true: 'switcher'}[tasted == -1]" (click)="onClickThumb(false)"></ion-icon>
+            </ion-col>
+
+            <ion-col>
+              <ion-icon class="thumb" name="thumbs-up" [color]="{true: 'switcher'}[tasted == 1]" (click)="onClickThumb(true)"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-item>
+
+
+    </ion-list>
+
+
+    <button ion-button block large color="switcher" (click)="onClickSubmit()" [disabled]="!dataIsValid()" >GO</button>
+    <button ion-button block  color="danger" (click)="onClickCancel()" >cancel</button>
+  </div>
+
+
+
+
+
 </ion-content>

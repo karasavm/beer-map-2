@@ -5,6 +5,7 @@ import {Brew} from "../../helpers/brew.model";
 import {normalizeKey} from "../../helpers/lib";
 import {BeerMapGoogle} from "../../helpers/beer-map-google";
 
+
 /**
  * Generated class for the Home2Page page.
  *
